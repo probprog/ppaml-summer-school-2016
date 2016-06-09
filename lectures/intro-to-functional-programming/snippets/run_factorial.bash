@@ -11,8 +11,7 @@ java -cp target/uberjar/examples-0.1.0-SNAPSHOT.jar \
 # option 2: run using leiningen
 lein run -m examples.factorial 1 2 5 20
 
-# =>
-# the factorial of 1 is 1
-# the factorial of 2 is 2
-# the factorial of 5 is 120
-# the factorial of 20 is 2432902008176640000
+# => the factorial of 1 is 1
+# => the factorial of 2 is 2
+# => the factorial of 5 is 120
+# => the factorial of 20 is 2432902008176640000
