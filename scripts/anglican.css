@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
 :root {
-	--blue: #06A;
+	--blue: #06b;
 	--red: #900;
-	--magenta: #60A;
-	--cyan: #088;
+	--magenta: #70b;
+	--cyan: #098;
 	--gray: #666;
 	--orange: #A70;
 	--black: #000;
@@ -30,11 +30,11 @@
 .gu { color: var(--gray) } /* Generic.Subheading */
 .gt { color: var(--magenta) } /* Generic.Traceback */
 .kc { color: var(--red); } /* Keyword.Constant */
-.kd { color: var(--red); } /* Keyword.Declaration */
+.kd { color: var(--magenta); } /* Keyword.Declaration */
 .kn { color: var(--red); } /* Keyword.Namespace */
 .kp { color: var(--red); } /* Keyword.Pseudo */
-.kr { color: var(--red); } /* Keyword.Reserved */
-.kt { color: var(--blue) } /* Keyword.Type */
+.kr { color: var(--blue); } /* Keyword.Reserved */
+.kt { color: var(--magenta) } /* Keyword.Type */
 .m { color: var(--text) } /* Literal.Number */
 .s { color: var(--orange) } /* Literal.String */
 .na { color: var(--text) } /* Name.Attribute */
