@@ -43,11 +43,11 @@
 .no { color: var(--text) } /* Name.Constant */
 .ni { color: var(--text) } /* Name.Entity */
 .ne { color: var(--text) } /* Name.Exception */
-.nf { color: var(--text) } /* Name.Function */
-.nn { color: var(--gray) } /* Name.Namespace */
+.nf { color: var(--magenta) } /* Name.Function */
+.nn { color: var(--text) } /* Name.Namespace */
 .nt { color: var(--black) } /* Name.Tag */
 .nv { color: var(--text) } /* Name.Variable */
-.ow { color: var(--cyan) } /* Operator.Word */
+.ow { color: var(--red) } /* Operator.Word */
 .w { color: var(--gray) } /* Text.Whitespace */
 .mb { color: var(--text) } /* Literal.Number.Bin */
 .mf { color: var(--text) } /* Literal.Number.Float */

@@ -237,7 +237,7 @@ parser.add_argument('-s', dest='style', metavar='FILENAME',
                     default=os.path.join(source_path, 'anglican.css'),
                     help='Style to use for syntax highlighting. May be a pygments builtin or CSS style sheet.')
 parser.add_argument('-p', dest='prestyles', metavar='ATTRIBUTES',
-                    default='font-family: Source Code Pro; font-size: 26px',
+                    default='font-family: Consolas; font-size: 26px; line-height: 110%',
                     help='Inline styles to use for <pre> element.')
 
 if __name__ == '__main__':
