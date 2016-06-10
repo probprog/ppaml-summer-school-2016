@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <link rel="stylesheet" href="../../../scripts/anglican.css" type="text/css">
+</head>
+<body>
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> 
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="mi">1</span>
+    <span class="p">(</span><span class="nb">* </span><span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="nf">factorial</span> <span class="mi">21</span><span class="p">)</span>
+<span class="c1">; =&gt; ArithmeticException integer overflow  </span>
+<span class="c1">;    clojure.lang.Numbers.throwIntOverflow (Numbers.java:1501)</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> 
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="mi">1</span><span class="nv">N</span>
+    <span class="p">(</span><span class="nb">* </span><span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> 
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="mi">1</span>
+    <span class="p">(</span><span class="nb">*&#39; </span><span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="nf">factorial</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="c1">; =&gt; StackOverflowError   clojure.lang.Numbers.equal (Numbers.java:216)</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">result</span> <span class="mi">1</span>
+         <span class="nv">ivals</span> <span class="p">(</span><span class="nb">range </span><span class="mi">2</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">n</span> <span class="mi">1</span><span class="p">))]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">seq </span><span class="nv">ivals</span><span class="p">)</span>
+      <span class="p">(</span><span class="k">recur </span><span class="p">(</span><span class="nb">* </span><span class="nv">result</span> <span class="p">(</span><span class="nb">first </span><span class="nv">ivals</span><span class="p">))</span>
+             <span class="p">(</span><span class="nb">rest </span><span class="nv">ivals</span><span class="p">))</span>
+      <span class="nv">result</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">(</span><span class="nb">reduce </span><span class="c1">;; inputs: current result and next value </span>
+          <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">result</span> <span class="nv">i</span><span class="p">]</span>
+            <span class="c1">;; output: result</span>
+            <span class="p">(</span><span class="nb">* </span><span class="nv">result</span> <span class="nv">i</span><span class="p">))</span>
+          <span class="mi">1</span>
+          <span class="p">(</span><span class="nb">range </span><span class="p">(</span><span class="nb">+ </span><span class="nv">n</span> <span class="mi">1</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">(</span><span class="nb">reduce * </span><span class="mi">1</span> <span class="p">(</span><span class="nb">range </span><span class="mi">2</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">n</span> <span class="mi">1</span><span class="p">))))</span>
+
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+  <span class="s">&quot;computes n * (n-1) * ... * 1&quot;</span>
+  <span class="p">(</span><span class="nb">reduce * </span><span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">n</span> <span class="mi">1</span><span class="p">))))</span>
+</pre></div>
+
+</body>
+

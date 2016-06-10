@@ -8,6 +8,13 @@ def factorial(n):
     else:
         return n * factorial(n - 1)
 
+def factorial_loop(n):
+    '''computes n * (n - 1) * ... * 1'''
+    result = 1
+    for n in range(2, n + 1):
+        result *= n
+    return result
+
 if __name__ == '__main__':
     for arg in sys.argv[1:]:
         n = int(arg)
