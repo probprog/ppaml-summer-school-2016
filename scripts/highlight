@@ -93,7 +93,7 @@ class AnglicanLexer(RegexLexer):
         'future?', 'gensym', 'get', 'get-in', 'get-method', 'get-proxy-class', 
         'get-thread-bindings', 'get-validator', 'group-by', 'hash', 'hash-combine', 'hash-map', 
         'hash-ordered-coll', 'hash-set', 'hash-unordered-coll', 'identical?', 'identity', 
-        'ifn?', 'in-ns', 'inc', 'init-proxy', 'instance?', 'int', 'int-array', 'integer?', 
+        'ifn?', 'in-ns', 'inc', 'inc\'', 'init-proxy', 'instance?', 'int', 'int-array', 'integer?', 
         'interleave', 'intern', 'interpose', 'into', 'into-array', 'ints', 'isa?', 'iterate', 
         'iterator-seq', 'juxt', 'keep', 'keep-indexed', 'key', 'keys', 'keyword', 'keyword?', 'last', 
         'line-seq', 'list', 'list*', 'list?', 'load', 'load-file', 'load-reader', 'load-string', 
