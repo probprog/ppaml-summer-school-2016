@@ -65,7 +65,7 @@ class AnglicanLexer(RegexLexer):
 
     builtins = (
         # clojure primitives
-        '*', '+', '-', '->ArrayChunk', '->Vec', '->VecNode',
+        '*', '+', '-', '*\'', '+\'', '-\'', '->ArrayChunk', '->Vec', '->VecNode',
         '->VecSeq', '-cache-protocol-fn', '-reset-methods', '/', '<', '<=', '=', '==', '>', '>=', 
         'accessor', 'aclone', 'add-classpath', 'add-watch', 'agent', 'agent-error', 
         'agent-errors', 'aget', 'alength', 'alias', 'all-ns', 'alter', 'alter-meta!', 
@@ -80,7 +80,7 @@ class AnglicanLexer(RegexLexer):
         'chunked-seq?', 'class', 'class?', 'clear-agent-errors', 'clojure-version', 'coll?', 
         'commute', 'comp', 'comparator', 'compare', 'compare-and-set!', 'compile', 'complement', 
         'concat', 'conj', 'conj!', 'cons', 'constantly', 'construct-proxy', 'contains?', 'count', 
-        'counted?', 'create-ns', 'create-struct', 'cycle', 'dec', 'decimal?', 'delay?', 
+        'counted?', 'create-ns', 'create-struct', 'cycle', 'dec', 'dec\'', 'decimal?', 'delay?', 
         'deliver', 'denominator', 'deref', 'derive', 'descendants', 'destructure', 'disj', 'disj!', 
         'dissoc', 'dissoc!', 'distinct', 'distinct?', 'doall', 'dorun', 'double', 'double-array', 
         'doubles', 'drop', 'drop-last', 'drop-while', 'empty', 'empty?', 'ensure', 
