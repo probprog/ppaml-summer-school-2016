@@ -94,7 +94,11 @@
 ;;; 
 ;;; Comparison operators `<`, `>`, `=`, `<=`, `>=` behave as one would expect, and can be used within an `if` statement. The `if` statement takes the form
 ;;; 
-;;; `(if bool? expr-if-true expr-if-false)`
+;;; ```clojure
+;;;    (if boolean-expr 
+;;;      expr-if-true 
+;;;      expr-if-false)
+;;; ```
 ;;; 
 ;;; That is, an `if` expression will itself be a list with four elements: the first is `if`, the second evaluates to a boolean, and the last two are any arbitrary expressions. Here are a few examples. Please ask if you have any questions about these!
 ;; **
@@ -255,11 +259,32 @@
 ;; <=
 
 ;; **
-;;; ## Lists and Vectors
+;;; ## Datastructures
 ;; **
 
 ;; **
-;;; Here is some example usage of lists in Clojure:
+;;; The core data structures in Clojure are
+;;; 
+;;; - lists: `(1 2 3)`
+;;; - vectors: `[1 2 3]`
+;;; - hashmaps: `{:a 1 :b 2}`
+;;; - sets: `#{1 2 3}`
+;;; 
+;;; Each of these data structures is a collection, which means that it supports the operations
+;;; 
+;;; - `(count collection)`: returns the number of elements
+;;; - `(conj collection element)`: inserts an element into the collection
+;;; - `(seq collection)`: converts the collection into an iterable sequence
+;;; 
+;;; Functions defined on sequences also apply to collections
+;;; 
+;;; - `(first sequence)`: returns the first element in a collection
+;;; - `(rest sequence)`: returns a sequence with everything but the first element
+;;; - `(cons element sequence)`: prepends an element to a sequence
+;; **
+
+;; **
+;;; ### Lists
 ;; **
 
 ;; @@
@@ -280,9 +305,22 @@
 ;; <=
 
 ;; @@
-;; Get a list containing the "rest" of the list (all but the first element)
-;; This returns `(2 3)`, a list
+;; rest returns the remainder of the list
 (rest (list 1 2 3))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(2 3)"}
+;; <=
+
+;; @@
+;; conj appends at the front for lists
+(conj (list 1 2 3) 0)
+
+;; peek extracts the first element
+(peek (list 1 2 3))
+
+;; pop removes the first element
+(pop (list 1 2 3))
 ;; @@
 ;; =>
 ;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(2 3)"}
@@ -346,8 +384,7 @@
 ;; <=
 
 ;; **
-;;; 
-;;; Here is some example usage of vectors in Clojure:
+;;; ### Vectors
 ;; **
 
 ;; @@
@@ -359,12 +396,25 @@
 ;; <=
 
 ;; @@
-;; When using `conj` on a vector, the element is appended to the END of the vector
-;; This creates [1 2 3 4]
+;; conj appends to the end for vectors
 (conj [1 2 3] 4)
+
+;; peek extracts the last element
+(peek [1 2 3])
+
+;; pop removes the last element
+(pop [1 2 3])
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[1 2 3 4]"}
+;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"}
+;; <=
+
+;; @@
+;; calling rest on a vector returns a sequence
+(rest [1 2 3])
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>(2 3)</span>","value":"(2 3)"}
 ;; <=
 
 ;; @@
@@ -375,15 +425,245 @@
 ;; @@
 ;; ->
 ;;; &quot;Elapsed time: 0.032 msecs&quot;
-;;; &quot;Elapsed time: 0.001 msecs&quot;
+;;; &quot;Elapsed time: 0.002 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-long'>20000000</span>","value":"20000000"}
 ;; <=
 
+;; @@
+;; vectors can be used as functions
+(let [v [1 2 3]]
+  (v 2))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
 ;; **
-;;; ## map, reduce, and loop
+;;; ### Hash maps
+;; **
+
+;; @@
+;; this is a hash map literal
+{:a 1 :b 2 :c 3}
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"}],"value":"{:a 1, :b 2, :c 3}"}
+;; <=
+
+;; @@
+;; entries in hash maps are customarily labeled with keywords
+(keyword "a")
+(class :a)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-class'>clojure.lang.Keyword</span>","value":"clojure.lang.Keyword"}
+;; <=
+
+;; @@
+;; however, keys in hash map can be any hashable object
+{:a 1 "b" 2 [3 4] 5}
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-string'>&quot;b&quot;</span>","value":"\"b\""},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[\"b\" 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"},{"type":"html","content":"<span class='clj-long'>5</span>","value":"5"}],"value":"[[3 4] 5]"}],"value":"{:a 1, \"b\" 2, [3 4] 5}"}
+;; <=
+
+;; @@
+;; get can be used to extract an entry from a hash map
+(let [m {:a 1 :b 2 :c 3}]
+  (get m :a))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}
+;; <=
+
+;; @@
+;; a get command can be given a value for missing entries
+(let [m {:a 1 :b 2 :c 3}]
+  (get m :d 4))
+
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}
+;; <=
+
+;; @@
+;; the assoc command inserts an entry into a hash map
+(let [m {:a 1 :b 2 :c 3}]
+  (assoc m :d 4))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
+;; <=
+
+;; @@
+;; calling seq on a hash map produces a sequence of pairs
+(let [m {:a 1 :b 2 :c 3}]
+  (seq m))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>([:a 1] [:b 2] [:c 3])</span>","value":"([:a 1] [:b 2] [:c 3])"}
+;; <=
+
+;; @@
+;; conj can be used to insert into a hash map
+(let [m {:a 1 :b 2 :c 3}]
+  (conj m [:d 4]))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
+;; <=
+
+;; @@
+;; like vectors, hash maps can be used as functions
+(let [m {:a 1 :b 2 :c 3}]
+  (m :c))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
+;; @@
+;; keywords start with :, and can be used as functions as well
+(let [m {:a 1 :b 2 :c 3}]
+  (:c m))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
+;; @@
+;; under the hood, hash maps can have two different types
+(array-map :a 1 :b 2 :c 3)
+(hash-map :a 1 :b 2 :c 3)
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:c 3, :b 2, :a 1}"}
+;; <=
+
+;; @@
+;; array maps are ordered
+(let [m (array-map :a 1 :b 2 :c 3)]
+  (first m))
+
+(let [m (array-map :a 1 :b 2 :c 3)]
+  (assoc m :d 4))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
+;; <=
+
+;; @@
+;; hash maps are unordered
+(let [m (hash-map :a 1 :b 2 :c 3)]
+  (first m))
+
+(let [m (hash-map :a 1 :b 2 :c 3)]
+  (assoc m :d 4))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:c 3, :b 2, :d 4, :a 1}"}
+;; <=
+
+;; @@
+;; small literals are array maps by default
+{:a 1 :b 2 :c 3 :d 4 
+ :e 5 :f 6 :g 7 :h 8}
+
+;; larger literals are hash maps
+{:a 1 :b 2 :c 3 :d 4 
+ :e 5 :f 6 :g 7 :h 8
+ :i 9}
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:e</span>","value":":e"},{"type":"html","content":"<span class='clj-long'>5</span>","value":"5"}],"value":"[:e 5]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:g</span>","value":":g"},{"type":"html","content":"<span class='clj-long'>7</span>","value":"7"}],"value":"[:g 7]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:h</span>","value":":h"},{"type":"html","content":"<span class='clj-long'>8</span>","value":"8"}],"value":"[:h 8]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:f</span>","value":":f"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}],"value":"[:f 6]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:i</span>","value":":i"},{"type":"html","content":"<span class='clj-long'>9</span>","value":"9"}],"value":"[:i 9]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:e 5, :g 7, :c 3, :h 8, :b 2, :d 4, :f 6, :i 9, :a 1}"}
+;; <=
+
+;; **
+;;; ## Lazy sequences
+;; **
+
+;; **
+;;; The following function defines an infinite sequence of numbers as a so-called lazy sequence. In a lazy sequence, elements are not evaluated until the are accessed for the first time, but are stored in memory afterwards.
+;; **
+
+;; @@
+(defn inf-range 
+  "returns an infinite range as a lazy sequence"
+  ;; this defines the default call syntax
+  ([start step]
+  	(lazy-seq 
+      (cons start 
+            (inf-range (+ start step) 
+                       step))))
+  ;; this defines a call syntax with 
+  ;; the start argument omitted
+  ([step] 
+   (inf-range 0 step))
+  ;; this defines a call syntax with
+  ;; no arguments
+  ([]
+   (inf-range 0 1)))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/inf-range</span>","value":"#'getting-started/inf-range"}
+;; <=
+
+;; **
+;;; Don't *ever* try to evaluate lazy sequence in the repl, since this will try to print out an infinite sequence
+;; **
+
+;; @@
+;; (inf-range)
+;; @@
+
+;; **
+;;; But you can bind infinite sequences to variables just fine
+;; **
+
+;; @@
+(def my-range (inf-range))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/my-range</span>","value":"#'getting-started/my-range"}
+;; <=
+
+;; **
+;;; Elements are not evaluated until you accessed them the first time, but are then stored until they need to be garbage collected. To see this, let's write a version of range that is artificially slowed down
+;; **
+
+;; @@
+(defn slow-range 
+  ([start]
+  	(Thread/sleep 100)
+  	(lazy-seq 
+    	  (cons start 
+        	    (slow-range (inc start)))))
+  ([] (slow-range 0)))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/slow-range</span>","value":"#'getting-started/slow-range"}
+;; <=
+
+;; @@
+(def my-range (slow-range))
+
+(time (first (drop 10 my-range)))
+(time (first (drop 10 my-range)))
+;; @@
+;; ->
+;;; &quot;Elapsed time: 1109.23 msecs&quot;
+;;; &quot;Elapsed time: 0.072 msecs&quot;
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}
+;; <=
+
+;; **
+;;; ## Map, Reduce, and Loop
 ;;; 
 ;;; One thing which will be useful are the `map` and `reduce` functions for performing operations on lists.
 ;;; 
@@ -394,8 +674,8 @@
 
 ;; @@
 ;; Apply the function f(x) = x*x to every element of the list `(1 2 3 4)`
-(map (fn [x] 
-       (* x x)) 
+(map (fn [x]
+       (* x x))
      (list 1 2 3 4))
 ;; @@
 ;; =>
@@ -413,7 +693,7 @@
 
 ;; @@
 ;; Apply the function f(x,y) = x + 2y to the x values `(1 2 3)` and the y values `(10 9 8)`
-(map (fn [x y] 
+(map (fn [x y]
        (+ x (* 2 y)))
      [1 2 3]   ; these are values x1, x2, x3
      [10 9 8]) ; these are values y1, y2, y3
@@ -431,7 +711,7 @@
 ;; <=
 
 ;; @@
-;; This does the same thing. Note that the result is now a long, not a double because we have not provied the initial value 0.0.
+;; This does the same thing, but produces a long
 (reduce + [1 2 3])
 ;; @@
 ;; =>
@@ -513,21 +793,21 @@
 ;; **
 ;;; ## Keyboard Shortcuts
 ;;; 
-;;; You can use the following keyboard shortcuts inside a Gorilla Repl worksheet. These shortcuts are for **OS X** and **Linux**. Users on **Windows** should replace `ctrl` with `alt`. 
+;;; You can use the following keyboard shortcuts inside a Gorilla Repl worksheet. These shortcuts are for **Linux** and **Windows**. **OS X** users should replace `alt` with `ctrl`. 
 ;;; 
 ;;; | Key | Action |
 ;;; |:-|:-|
-;;; | `ctrl+g  ctrl+g` | Open menu |
-;;; | `ctrl+space` | Activate autocompletion |
+;;; | `alt+g  alt+g` | Open menu |
+;;; | `alt+space` | Activate autocompletion |
 ;;; | `shift+enter` | Evaluate current segment |
-;;; | `ctrl+shift+enter` | Evaluate entire work sheet |
-;;; | `ctrl+g  ctrl+l` | Load worksheet |                                             
-;;; | `ctrl+g  ctrl+s` | Save worksheet |
-;;; | `ctrl+g  ctrl+n` | Create new segment *below* current segment |
-;;; | `ctrl+g  ctrl+b` | Create new segment *above* current segment |
-;;; | `ctrl+g  ctrl+x` | Delete current segment |
-;;; | `ctrl+g  ctrl+u` | Move segment *up* |
-;;; | `ctrl+g  ctrl+d` | Move segment *down* |
-;;; | `ctrl+g  ctrl+m` | Convert current segment to markdown |
-;;; | `ctrl+g  ctrl+j` | Convert the current segment to a Clojure segment |
+;;; | `alt+shift+enter` | Evaluate entire work sheet |
+;;; | `alt+g  alt+l` | Load worksheet |                                             
+;;; | `alt+g  alt+s` | Save worksheet |
+;;; | `alt+g  alt+n` | Create new segment *below* current segment |
+;;; | `alt+g  alt+b` | Create new segment *above* current segment |
+;;; | `alt+g  alt+x` | Delete current segment |
+;;; | `alt+g  alt+u` | Move segment *up* |
+;;; | `alt+g  alt+d` | Move segment *down* |
+;;; | `alt+g  alt+m` | Convert current segment to markdown |
+;;; | `alt+g  alt+j` | Convert the current segment to a Clojure segment |
 ;; **
