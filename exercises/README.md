@@ -1,1 +1,1 @@
-Source code examples for PPAML summer school lecture on intro to functional programmming
+Source code examples and exercises for PPAML summer school on Anglican
