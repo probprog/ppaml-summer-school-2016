@@ -10,9 +10,17 @@
    (:use [anglican.runtime]))
 
 (def ...complete-this... nil)
+
+(defmacro dbg 
+  "Prints an expression and
+  its value for debugging."
+  [expr]
+  `(let [value# ~expr] 
+     (println "[dbg]" '~expr value#) 
+     value#)) 
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/...complete-this...</span>","value":"#'clojure-exercises/...complete-this..."}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/dbg</span>","value":"#'clojure-exercises/dbg"}
 ;; <=
 
 ;; **
@@ -60,6 +68,7 @@
 
 ;; @@
 (sum [1 2 3])
+; => 6.0
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-double'>6.0</span>","value":"6.0"}
@@ -75,7 +84,7 @@
 (defn sum 
   "returns the sum of values in a collection"
   [values]
-  (loop [result nil
+  (loop [result ...complete-this...
          values values]
     (if (seq values)
       (if result
@@ -114,11 +123,15 @@
 ;; **
 
 ;; @@
-(sum [1 2 3])
 (sum [1.0 2.0 3.0])
+; => 6.0
+
+
+(sum [1 2 3])
+; => 6
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-double'>6.0</span>","value":"6.0"}
+;;; {"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}
 ;; <=
 
 ;; **
@@ -140,6 +153,18 @@
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/sum</span>","value":"#'clojure-exercises/sum"}
+;; <=
+
+;; @@
+(sum [1.0 2.0 3.0])
+; => 6.0
+
+
+(sum [1 2 3])
+; => 6
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}
 ;; <=
 
 ;; **
@@ -191,6 +216,7 @@
 
 ;; @@
 (cumsum (list 1 2 3 4))
+; => [1 3 6 10]
 ;; @@
 ;; =>
 ;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}],"value":"[1 3 6 10]"}
@@ -242,6 +268,7 @@
 
 ;; @@
 (cumsum [1 2 3 4])
+; => (1 3 6 10)
 ;; @@
 ;; =>
 ;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}],"value":"(1 3 6 10)"}
@@ -295,12 +322,10 @@
 ;; @@
 (my-mapv #(* % %) 
          (range 5))
-
-;; => [0 1 4 9 16]
+; => [0 1 4 9 16]
 
 (my-mapv #(* % %) nil)
-
-;; => []
+; => []
 ;; @@
 ;; =>
 ;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[],"value":"[]"}
@@ -336,12 +361,10 @@
 
 ;; @@
 (my-map #(* % %) (range 5))
-
-;; => (0 1 4 9 16)
+; => (0 1 4 9 16)
 
 (my-map #(* % %) nil)
-
-;; => ()
+; => ()
 ;; @@
 ;; =>
 ;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[],"value":"()"}
@@ -429,6 +452,29 @@
 (defn my-comp [f g]
   ...complete-this...)
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-comp</span>","value":"#'clojure-exercises/my-comp"}
+;; <=
+
+;; @@
+;; solution
+(defn my-comp [f g]
+  (fn [& args] 
+    (f (apply g args))))
+;; @@
+
+;; **
+;;; Test your function
+;; **
+
+;; @@
+(let [f (comp abs *)]
+  (f -1 2 -3 4 -5))
+; => 120
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>120</span>","value":"120"}
+;; <=
 
 ;; **
 ;;; We can look up how the Clojure function `comp` is defined using the `source` command from the `clojure.repl` namespace
@@ -482,7 +528,7 @@
 ;;; As a final exercise, let's implement the `reduce` function. This function has two signatures
 ;;; 
 ;;; 1. `(reduce f init values)`: repeatedly call `(f result value)` for each `value` in `values` where `result` is the result of the previous function call, and is initialized to `init`.
-;;; 2. `(reduce f values)`: perform the above operation, initializing `init` to `(first values)` and `values` to `(rest values)`. 
+;;; 2. `(reduce f values)`: perform the above operation, initializing `init` to `(first values)` and replacing `values` with `(rest values)`. 
 ;;; 
 ;;; Complete the following code (*hint*: look at the `loop` and `recur` patterns from Exercise 1)
 ;; **
@@ -497,21 +543,19 @@
 
 ;; @@
 ;; solution
-
 (defn my-reduce 
-  ([f init values]
-   (loop [result init
-          values values]
-     (if (seq values)
-       (recur (f result 
-                 (first values))
-              (rest values))
-       result)))
+  ([f result values]
+   (if (seq values)
+     (recur f 
+            (f result (first values))
+            (rest values))
+     result))
   ([f values]
-   (when (seq values)
+   (if (seq values)
      (my-reduce f 
                 (first values) 
-                (rest values)))))
+                (rest values))
+     (f))))
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reduce</span>","value":"#'clojure-exercises/my-reduce"}
@@ -533,11 +577,13 @@
                      v)))
            []
            [1 2 3 4])
-
 ; => [1 3 6 10]
+
+(my-reduce + nil)
+; => 0
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}],"value":"[1 3 6 10]"}
+;;; {"type":"html","content":"<span class='clj-long'>0</span>","value":"0"}
 ;; <=
 
 ;; **
@@ -552,13 +598,515 @@
    ...complete-this...))
 ;; @@
 
+;; @@
+;; solution
+(defn my-reductions
+  ([f result values]
+   (lazy-seq
+     (cons result
+           (when (seq values)
+             (my-reductions f
+                            (f result 
+                               (first values))
+                            (rest values))))))
+  ([f values]
+   (if (seq values)
+     (my-reductions f
+                    (first values)
+                    (rest values))
+     (lazy-seq (f)))))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reductions</span>","value":"#'clojure-exercises/my-reductions"}
+;; <=
+
 ;; **
 ;;; and test your code	
 ;; **
 
 ;; @@
-(my-reductions +
-               [1 2 3 4])
-
+(my-reductions + [1 2 3 4])
 ; => (1 3 6 10)
 ;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}],"value":"(1 3 6 10)"}
+;; <=
+
+;; @@
+;; once you are certain that you are returning a lazy sequence
+
+(defn inf-range 
+  "returns an infinite range as a lazy sequence"
+  ;; this defines the default call syntax
+  ([start step]
+  	(lazy-seq 
+      (cons start 
+            (inf-range (+ start step) 
+                       step))))
+  ;; this defines a call syntax with 
+  ;; the start argument omitted
+  ([step] 
+   (inf-range 0 step))
+  ;; this defines a call syntax with
+  ;; no arguments
+  ([]
+   (inf-range 0 1)))
+
+(take 10 (my-reductions + (inf-range)))
+; => (0 1 3 6 10 15 21 28 36 45)
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"},{"type":"html","content":"<span class='clj-long'>15</span>","value":"15"},{"type":"html","content":"<span class='clj-long'>21</span>","value":"21"},{"type":"html","content":"<span class='clj-long'>28</span>","value":"28"},{"type":"html","content":"<span class='clj-long'>36</span>","value":"36"},{"type":"html","content":"<span class='clj-long'>45</span>","value":"45"}],"value":"(0 1 3 6 10 15 21 28 36 45)"}
+;; <=
+
+;; **
+;;; ## Exercise 3: Recursion
+;; **
+
+;; **
+;;; For our last exercise, we will consider recursive functions. Suppose we have the following problem: somebody has written a function that returns complicated nested data structures. Say we have something of the form
+;;; 
+;; **
+
+;; @@
+{:a (list "1" "2.0" "-3" "4.0e0" "5N")
+ :b [["1" 2] ["3" 4]]
+ :c #{1 "2" 3}
+ :d {"1" "red" "2" "green" "3" "blue"} 
+ :e nil}
+;; @@
+
+;; **
+;;; Can we now write a function that replaces all strings corresponding to numbers with their numeric equivalents, to produce
+;; **
+
+;; @@
+{:a (1 2.0 -3 4.0 5N)
+ :b [[1 2] [3 4]]
+ :c #{1 3 2}
+ :d {1 "red", 2 "green", 3 "blue"}
+ :e nil}
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-double'>2.0</span>","value":"2.0"},{"type":"html","content":"<span class='clj-long'>-3</span>","value":"-3"},{"type":"html","content":"<span class='clj-double'>4.0</span>","value":"4.0"},{"type":"html","content":"<span class='clj-bigint'>5N</span>","value":"5N"}],"value":"(1 2.0 -3 4.0 5N)"}],"value":"[:a (1 2.0 -3 4.0 5N)]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"}],"value":"[[1 2] [3 4]]"}],"value":"[:b [[1 2] [3 4]]]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"list-like","open":"<span class='clj-set'>#{</span>","close":"<span class='clj-set'>}</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"#{1 3 2}"}],"value":"[:c #{1 3 2}]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-string'>&quot;red&quot;</span>","value":"\"red\""}],"value":"[1 \"red\"]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-string'>&quot;green&quot;</span>","value":"\"green\""}],"value":"[2 \"green\"]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-string'>&quot;blue&quot;</span>","value":"\"blue\""}],"value":"[3 \"blue\"]"}],"value":"{1 \"red\", 2 \"green\", 3 \"blue\"}"}],"value":"[:d {1 \"red\", 2 \"green\", 3 \"blue\"}]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:e</span>","value":":e"},{"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}],"value":"[:e nil]"}],"value":"{:a (1 2.0 -3 4.0 5N), :b [[1 2] [3 4]], :c #{1 3 2}, :d {1 \"red\", 2 \"green\", 3 \"blue\"}, :e nil}"}
+;; <=
+
+;; **
+;;; We will break this problem down into subproblems. In order to be able to convert data structures we need to be able to handle
+;;; 
+;;; 1. lists
+;;; 2. vectors
+;;; 3. lazy sequences
+;;; 4. hash maps
+;;; 5. sets (and any other collections)
+;; **
+
+;; **
+;;; Let's start by writing a function that converts a string to a number. You can assume the input is non-malicious and use the function `read-string` to parse strings into Clojure data. *hint:* use the `number?` function to test if an object is a number.
+;; **
+
+;; @@
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (if (string? v)
+    ...complete-this...
+    v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; @@
+;; solution
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (if (string? v)
+    (let [x (read-string v)]
+      (if (number? x) x v))
+    v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; **
+;;; Tests
+;; **
+
+;; @@
+(numerify "hello")
+; => "hello"
+
+(numerify "-3.14159e0")
+; => -3.14159
+
+(numerify ["1" "2" "3"])
+; => ["1" "2" "3"]
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-string'>&quot;1&quot;</span>","value":"\"1\""},{"type":"html","content":"<span class='clj-string'>&quot;2&quot;</span>","value":"\"2\""},{"type":"html","content":"<span class='clj-string'>&quot;3&quot;</span>","value":"\"3\""}],"value":"[\"1\" \"2\" \"3\"]"}
+;; <=
+
+;; **
+;;; Now let's write a function that can handle sequences. For each element in a list or vector, call `numerify` recursively, and make sure the result always has the same type as 
+;; **
+
+;; @@
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+    ...complete-this...
+    (seq? v)
+    ...complete-this...
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; @@
+;; solution
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+	(let [x (read-string v)]
+      (if (number? x) x v))    
+    (seq? v)
+    (map numerify v)
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; **
+;;; Tests
+;; **
+
+;; @@
+(numerify (list "1" 2 "3"))
+; => (1 2 3)
+
+(numerify (list (list 1 "2") 
+                (list "3" 4)))
+; => ((1 2) (3 4))
+
+(numerify ["1" 2 "3"])
+; => ["1" 2 "3"]
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-string'>&quot;1&quot;</span>","value":"\"1\""},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-string'>&quot;3&quot;</span>","value":"\"3\""}],"value":"[\"1\" 2 \"3\"]"}
+;; <=
+
+;; **
+;;; There is a small problem with the code above: To see this, look at the class of the output of a numerified list
+;; **
+
+;; @@
+(class (list "1" 2 "3"))
+(class (numerify (list "1" 2 "3")))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-class'>clojure.lang.LazySeq</span>","value":"clojure.lang.LazySeq"}
+;; <=
+
+;; **
+;;; The reason for this is that Clojure differentiates between lists and sequences. A list is a sequence, but a sequence is not necessarily a list. 
+;;; 
+;;; You can use `list?` to test whether a sequence is a list. Let's handle this case separately. While we're at it, let's also make sure we handle vectors
+;; **
+
+;; @@
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+    ...complete-this...
+    (list? v)
+    ...complete-this...
+    (vector? v)
+    ...complete-this...
+    (seq? v)
+    ...complete-this...
+	:else v))
+;; @@
+
+;; @@
+;; solution
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+	(let [x (read-string v)]
+      (if (number? x) x v))    
+    (list? v)
+    (apply list (map numerify v))
+    (vector? v)
+    (mapv numerify v)
+    (seq? v)
+    (map numerify v)
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; **
+;;; Tests
+;; **
+
+;; @@
+(numerify (list "1" 2 "3"))
+; => (1 2 3)
+
+(list? (numerify (list "1" 2 "3")))
+; => true
+
+(numerify (lazy-seq (cons 1 (list 2 "3"))))
+; => (1 2 3)
+
+(list? (numerify (lazy-seq (cons 1 (list 2 "3")))))
+; => false
+
+(seq? (numerify (lazy-seq (cons 1 (list 2 "3")))))
+; => true
+
+(numerify [["1" 2] [3 "4"]])
+; => [[1 2] [3 4]]
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"}],"value":"[[1 2] [3 4]]"}
+;; <=
+
+;; **
+;;; Now let's move on to hash maps and any other collection types like sets. 
+;;; 
+;;; You may remember from the `getting-started` worksheet that a hashmap, like any collection, can be iterated over as a sequence. For a hash map the elements of this are vector pairs. 
+;; **
+
+;; @@
+(seq {:a 1 :b 2})
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>([:a 1] [:b 2])</span>","value":"([:a 1] [:b 2])"}
+;; <=
+
+;; **
+;;; These look like vectors, but in fact have a special type. This type is a subtype of a vector
+;; **
+
+;; @@
+(class (first {:a 1 :b 2}))
+(vector? (first {:a 1 :b 2}))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"}
+;; <=
+
+;; **
+;;; The command `into` can be used to turn a sequence of pairs back into a hashmap
+;; **
+
+;; @@
+(into {} [[:a 1] [:b 2]])
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"}],"value":"{:a 1, :b 2}"}
+;; <=
+
+;; **
+;;; this command is funtionally equivalent to
+;; **
+
+;; @@
+(reduce conj {} [[:a 1] [:b 2]])
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"}],"value":"{:a 1, :b 2}"}
+;; <=
+
+;; **
+;;; using `map?` to test whether an object is a hash map, now extend the numerify function
+;; **
+
+;; @@
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+    ...complete-this...
+    (list? v)
+    ...complete-this...
+    (vector? v)
+    ...complete-this...
+    (seq? v)
+    ...complete-this...
+    (map? v)
+    ...complete-this...
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; @@
+;; solution
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+	(let [x (read-string v)]
+      (if (number? x) x v))    
+    (list? v)
+    (apply list (map numerify v))
+    (vector? v)
+    (mapv numerify v)
+    (seq? v)
+    (map numerify v)
+    (map? v)
+    (into {} (map numerify v))
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; **
+;;; Test your result
+;; **
+
+;; @@
+(numerify {1 "2" "3" 4 :a 5})
+;; => {1 2, 3 4, :a 5}
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>5</span>","value":"5"}],"value":"[:a 5]"}],"value":"{1 2, 3 4, :a 5}"}
+;; <=
+
+;; **
+;;; Now that we have hash maps working, the only other core data type that we need to think about are sets. 
+;;; 
+;;; It turns out that the `into` trick does not only work for hash maps, it also works for sets, and collections in general 
+;; **
+
+;; @@
+(into #{} [1 2 3])
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-set'>#{</span>","close":"<span class='clj-set'>}</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"#{1 3 2}"}
+;; <=
+
+;; **
+;;; Lookup the function `empty`, and use it to generalize your solution for hash maps to other collection types
+;; **
+
+;; @@
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+    ...complete-this...
+    (list? v)
+    ...complete-this...
+    (vector? v)
+    ...complete-this...
+    (seq? v)
+    ...complete-this...
+    (coll? v)
+    ...complete-this...
+	:else v))
+;; @@
+
+;; @@
+;; solution
+(defn numerify
+  "try to parse a string as a number, do nothing when 
+  the string is does not parse to a number or for any
+  other type of object"
+  [v]
+  (cond 
+    (string? v)
+	(let [x (read-string v)]
+      (if (number? x) x v))    
+    (list? v)
+    (apply list (map numerify v))
+    (vector? v)
+    (mapv numerify v)
+    (seq? v)
+    (map numerify v)
+    (coll? v)
+    (into (empty v) (map numerify v))
+	:else v))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/numerify</span>","value":"#'clojure-exercises/numerify"}
+;; <=
+
+;; **
+;;; You have now written a function that can walk over arbitrary nested Clojure data types in just over 10 lines of code. That's pretty ninja, especially if this is your first day as a Clojure programmer. Test your result! 
+;; **
+
+;; @@
+(numerify 
+  {:a (list "1" "2.0" "-3" "4.0e0" "5N")
+   :b [["1" 2] ["3" 4]]
+   :c #{1 "2" 3}
+   :d {"1" "red" "2" "green" "3" "blue"} 
+   :e nil})
+;; => {:a (1 2.0 -3 4.0 5N), 
+;;     :b [[1 2] [3 4]], 
+;;     :c #{1 3 2}, 
+;;     :d {1 "red", 2 "green", 3 "blue"}, 
+;;     :e nil} 
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-double'>2.0</span>","value":"2.0"},{"type":"html","content":"<span class='clj-long'>-3</span>","value":"-3"},{"type":"html","content":"<span class='clj-double'>4.0</span>","value":"4.0"},{"type":"html","content":"<span class='clj-bigint'>5N</span>","value":"5N"}],"value":"(1 2.0 -3 4.0 5N)"}],"value":"[:a (1 2.0 -3 4.0 5N)]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"}],"value":"[[1 2] [3 4]]"}],"value":"[:b [[1 2] [3 4]]]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"list-like","open":"<span class='clj-set'>#{</span>","close":"<span class='clj-set'>}</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"#{1 3 2}"}],"value":"[:c #{1 3 2}]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-string'>&quot;red&quot;</span>","value":"\"red\""}],"value":"[1 \"red\"]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-string'>&quot;green&quot;</span>","value":"\"green\""}],"value":"[2 \"green\"]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-string'>&quot;blue&quot;</span>","value":"\"blue\""}],"value":"[3 \"blue\"]"}],"value":"{1 \"red\", 2 \"green\", 3 \"blue\"}"}],"value":"[:d {1 \"red\", 2 \"green\", 3 \"blue\"}]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:e</span>","value":":e"},{"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}],"value":"[:e nil]"}],"value":"{:a (1 2.0 -3 4.0 5N), :b [[1 2] [3 4]], :c #{1 3 2}, :d {1 \"red\", 2 \"green\", 3 \"blue\"}, :e nil}"}
+;; <=
+
+;; **
+;;; *Bonus*: Since `into` can be used on any collection, it also works for vectors 
+;; **
+
+;; @@
+(let [v [-1 2 -3]]
+  (into (empty v) 
+        (map abs v)))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-unkown'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-unkown'>3</span>","value":"3"}],"value":"[1 2 3]"}
+;; <=
+
+;; **
+;;; You should therefore be able to numerify vectors with the `(coll? v)` clause. Try removing the `(vector? v)` clause from your solution. Can you explain why the resulting code no longer works? *Hint*: try calling `empty` on a `MapEntry` value.
+;;; 
+;;; Why should you not use `into` for lists and sequences in this function?
+;; **
