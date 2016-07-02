@@ -335,15 +335,6 @@
 ;; <=
 
 ;; @@
-;; Add an element to the FRONT of list with `conj`
-;; This returns `(0 1 2 3)`
-(conj (list 1 2 3) 0)
-;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
-;; <=
-
-;; @@
 ;; Create a list of 5 elements, all of which are the output of "1 + 1"
 (repeat 5 (+ 1 1))
 ;; @@
