@@ -313,10 +313,6 @@
 ;; <=
 
 ;; @@
-(r)
-;; @@
-
-;; @@
 ;; conj appends at the front for lists
 (conj (list 1 2 3) 0)
 
