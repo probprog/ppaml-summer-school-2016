@@ -313,6 +313,10 @@
 ;; <=
 
 ;; @@
+(r)
+;; @@
+
+;; @@
 ;; conj appends at the front for lists
 (conj (list 1 2 3) 0)
 
@@ -366,8 +370,8 @@
   (time (nth numbers 10000000)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 10.936 msecs&quot;
-;;; &quot;Elapsed time: 105.635 msecs&quot;
+;;; &quot;Elapsed time: 13.452546 msecs&quot;
+;;; &quot;Elapsed time: 113.157086 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -415,8 +419,8 @@
   (time (nth numbers 10000000)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 0.032 msecs&quot;
-;;; &quot;Elapsed time: 0.002 msecs&quot;
+;;; &quot;Elapsed time: 0.032317 msecs&quot;
+;;; &quot;Elapsed time: 6.74E-4 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -645,8 +649,8 @@
 (time (first (drop 10 my-range)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 1109.23 msecs&quot;
-;;; &quot;Elapsed time: 0.072 msecs&quot;
+;;; &quot;Elapsed time: 1101.491567 msecs&quot;
+;;; &quot;Elapsed time: 0.115022 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -789,7 +793,7 @@
 ;;; | Key | Action |
 ;;; |:-|:-|
 ;;; | `alt+g  alt+g` | Open menu |
-;;; | `alt+space` | Activate autocompletion |
+;;; | `ctrl+space` | Activate autocompletion |
 ;;; | `shift+enter` | Evaluate current segment |
 ;;; | `alt+shift+enter` | Evaluate entire work sheet |
 ;;; | `alt+g  alt+l` | Load worksheet |                                             
@@ -802,3 +806,7 @@
 ;;; | `alt+g  alt+m` | Convert current segment to markdown |
 ;;; | `alt+g  alt+j` | Convert the current segment to a Clojure segment |
 ;; **
+
+;; @@
+
+;; @@
