@@ -454,7 +454,7 @@
 ;; <=
 
 ;; @@
-;; however, keys in hash map can be any hashable object
+;; however, keys in a hash map can be any clojure object
 {:a 1 "b" 2 [3 4] 5}
 ;; @@
 ;; =>
