@@ -3,9 +3,13 @@
   :url "https://bitbucket.org/probprog/ppaml-summer-school-2016/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :plugins [[lein-gorilla "0.3.6"]]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [anglican "0.9.0"]
-                 [lein-gorilla "0.3.6"]]
+                 [net.mikera/core.matrix "0.44.0"]
+                 [net.mikera/vectorz-clj "0.30.1"]
+                 [net.polyc0l0r/clj-hdf5 "0.2.2-SNAPSHOT"]]
+  :java-source-paths ["src/ox_captcha"]
   :main ^:skip-aot examples.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
