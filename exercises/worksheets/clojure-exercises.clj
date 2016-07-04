@@ -544,12 +544,12 @@
 ;; @@
 ;; solution
 (defn my-reduce 
-  ([f result values]
+  ([f init values]
    (if (seq values)
      (recur f 
-            (f result (first values))
+            (f init (first values))
             (rest values))
-     result))
+     init))
   ([f values]
    (if (seq values)
      (my-reduce f 
@@ -558,7 +558,7 @@
      (f))))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reduce</span>","value":"#'clojure-exercises/my-reduce"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/my-reduce</span>","value":"#'user/my-reduce"}
 ;; <=
 
 ;; **
@@ -568,7 +568,7 @@
 ;; @@
 (my-reduce + [1 2 3 4])
 
-; => 6
+; => 10
 
 (my-reduce (fn [sums v]
              (conj sums
@@ -601,12 +601,12 @@
 ;; @@
 ;; solution
 (defn my-reductions
-  ([f result values]
+  ([f init values]
    (lazy-seq
-     (cons result
+     (cons init
            (when (seq values)
              (my-reductions f
-                            (f result 
+                            (f init 
                                (first values))
                             (rest values))))))
   ([f values]
@@ -617,7 +617,7 @@
      (lazy-seq (f)))))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reductions</span>","value":"#'clojure-exercises/my-reductions"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/my-reductions</span>","value":"#'user/my-reductions"}
 ;; <=
 
 ;; **
