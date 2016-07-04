@@ -935,7 +935,7 @@
 ;; <=
 
 ;; **
-;;; this command is funtionally equivalent to
+;;; this command is functionally equivalent to
 ;; **
 
 ;; @@
