@@ -525,7 +525,7 @@
 ;; **
 ;;; ### Exercise 2c Reduce
 ;;; 
-;;; As a final exercise, let's implement the `reduce` function. This function has two signatures
+;;; As a final exercise, let's implement the `reduce` function. This function has two signatures:
 ;;; 
 ;;; 1. `(reduce f init values)`: repeatedly call `(f result value)` for each `value` in `values` where `result` is the result of the previous function call, and is initialized to `init`.
 ;;; 2. `(reduce f values)`: perform the above operation, initializing `init` to `(first values)` and replacing `values` with `(rest values)`. 
