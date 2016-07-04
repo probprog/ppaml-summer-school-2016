@@ -681,7 +681,7 @@
 ;; **
 
 ;; @@
-{:a (1 2.0 -3 4.0 5N)
+{:a (list 1 2.0 -3 4.0 5N)
  :b [[1 2] [3 4]]
  :c #{1 3 2}
  :d {1 "red", 2 "green", 3 "blue"}
@@ -702,7 +702,7 @@
 ;; **
 
 ;; **
-;;; Let's start by writing a function that converts a string to a number. You can assume the input is non-malicious and use the function `read-string` to parse strings into Clojure data. *hint:* use the `number?` function to test if an object is a number.
+;;; Let's start by writing a function that converts a string to a number. You can assume the input is non-malicious and use the function `read-string` to parse strings into Clojure data. *Hint:* use the `number?` function to test if an object is a number.
 ;; **
 
 ;; @@
