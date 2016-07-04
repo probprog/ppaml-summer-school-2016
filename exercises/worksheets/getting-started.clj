@@ -5,7 +5,7 @@
 ;;; 
 ;;; This file is a Gorilla Repl worksheet. This is a notebook format which allows writing Clojure (and Anglican) code in cells within a document. Conceptually this is quite similar to [jupyter](http://jupyter.org) notebooks.
 ;;; 
-;;; Pressing `shift+enter` evaluates a code segment. You can access more commands via the menu, either by clicking the icon in the upper-right corner, or by pressing `ctrl+g ctrl+g` (i.e. pressing `ctrl+g` twice in quick succession).
+;;; Pressing `shift+enter` evaluates a code segment. You can access more commands via the menu, either by clicking the icon in the upper-right corner, or by pressing `alt+g alt+g` (i.e. pressing `alt+g` twice in quick succession). If you are using OS X, you have to use `ctrl` instead of `alt`.
 ;; **
 
 ;; **
@@ -335,15 +335,6 @@
 ;; <=
 
 ;; @@
-;; Add an element to the FRONT of list with `conj`
-;; This returns `(0 1 2 3)`
-(conj (list 1 2 3) 0)
-;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
-;; <=
-
-;; @@
 ;; Create a list of 5 elements, all of which are the output of "1 + 1"
 (repeat 5 (+ 1 1))
 ;; @@
@@ -375,8 +366,8 @@
   (time (nth numbers 10000000)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 10.936 msecs&quot;
-;;; &quot;Elapsed time: 105.635 msecs&quot;
+;;; &quot;Elapsed time: 13.452546 msecs&quot;
+;;; &quot;Elapsed time: 113.157086 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -424,8 +415,8 @@
   (time (nth numbers 10000000)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 0.032 msecs&quot;
-;;; &quot;Elapsed time: 0.002 msecs&quot;
+;;; &quot;Elapsed time: 0.032317 msecs&quot;
+;;; &quot;Elapsed time: 6.74E-4 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -463,7 +454,7 @@
 ;; <=
 
 ;; @@
-;; however, keys in hash map can be any hashable object
+;; however, keys in a hash map can be any clojure object
 {:a 1 "b" 2 [3 4] 5}
 ;; @@
 ;; =>
@@ -654,8 +645,8 @@
 (time (first (drop 10 my-range)))
 ;; @@
 ;; ->
-;;; &quot;Elapsed time: 1109.23 msecs&quot;
-;;; &quot;Elapsed time: 0.072 msecs&quot;
+;;; &quot;Elapsed time: 1101.491567 msecs&quot;
+;;; &quot;Elapsed time: 0.115022 msecs&quot;
 ;;; 
 ;; <-
 ;; =>
@@ -798,7 +789,7 @@
 ;;; | Key | Action |
 ;;; |:-|:-|
 ;;; | `alt+g  alt+g` | Open menu |
-;;; | `alt+space` | Activate autocompletion |
+;;; | `ctrl+space` | Activate autocompletion |
 ;;; | `shift+enter` | Evaluate current segment |
 ;;; | `alt+shift+enter` | Evaluate entire work sheet |
 ;;; | `alt+g  alt+l` | Load worksheet |                                             
@@ -811,3 +802,7 @@
 ;;; | `alt+g  alt+m` | Convert current segment to markdown |
 ;;; | `alt+g  alt+j` | Convert the current segment to a Clojure segment |
 ;; **
+
+;; @@
+
+;; @@
