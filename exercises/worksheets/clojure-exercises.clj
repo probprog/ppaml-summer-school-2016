@@ -525,7 +525,7 @@
 ;; **
 ;;; ### Exercise 2c Reduce
 ;;; 
-;;; As a final exercise, let's implement the `reduce` function. This function has two signatures
+;;; As a final exercise, let's implement the `reduce` function. This function has two signatures:
 ;;; 
 ;;; 1. `(reduce f init values)`: repeatedly call `(f result value)` for each `value` in `values` where `result` is the result of the previous function call, and is initialized to `init`.
 ;;; 2. `(reduce f values)`: perform the above operation, initializing `init` to `(first values)` and replacing `values` with `(rest values)`. 
@@ -544,12 +544,12 @@
 ;; @@
 ;; solution
 (defn my-reduce 
-  ([f result values]
+  ([f init values]
    (if (seq values)
      (recur f 
-            (f result (first values))
+            (f init (first values))
             (rest values))
-     result))
+     init))
   ([f values]
    (if (seq values)
      (my-reduce f 
@@ -558,7 +558,7 @@
      (f))))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reduce</span>","value":"#'clojure-exercises/my-reduce"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/my-reduce</span>","value":"#'user/my-reduce"}
 ;; <=
 
 ;; **
@@ -568,7 +568,7 @@
 ;; @@
 (my-reduce + [1 2 3 4])
 
-; => 6
+; => 10
 
 (my-reduce (fn [sums v]
              (conj sums
@@ -601,12 +601,12 @@
 ;; @@
 ;; solution
 (defn my-reductions
-  ([f result values]
+  ([f init values]
    (lazy-seq
-     (cons result
+     (cons init
            (when (seq values)
              (my-reductions f
-                            (f result 
+                            (f init 
                                (first values))
                             (rest values))))))
   ([f values]
@@ -617,7 +617,7 @@
      (lazy-seq (f)))))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;clojure-exercises/my-reductions</span>","value":"#'clojure-exercises/my-reductions"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/my-reductions</span>","value":"#'user/my-reductions"}
 ;; <=
 
 ;; **
@@ -681,7 +681,7 @@
 ;; **
 
 ;; @@
-{:a (1 2.0 -3 4.0 5N)
+{:a (list 1 2.0 -3 4.0 5N)
  :b [[1 2] [3 4]]
  :c #{1 3 2}
  :d {1 "red", 2 "green", 3 "blue"}
@@ -702,7 +702,7 @@
 ;; **
 
 ;; **
-;;; Let's start by writing a function that converts a string to a number. You can assume the input is non-malicious and use the function `read-string` to parse strings into Clojure data. *hint:* use the `number?` function to test if an object is a number.
+;;; Let's start by writing a function that converts a string to a number. You can assume the input is non-malicious and use the function `read-string` to parse strings into Clojure data. *Hint:* use the `number?` function to test if an object is a number.
 ;; **
 
 ;; @@
@@ -935,7 +935,7 @@
 ;; <=
 
 ;; **
-;;; this command is funtionally equivalent to
+;;; this command is functionally equivalent to
 ;; **
 
 ;; @@
