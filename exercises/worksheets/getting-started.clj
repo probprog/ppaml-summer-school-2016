@@ -6,6 +6,8 @@
 ;;; This file is a Gorilla Repl worksheet. This is a notebook format which allows writing Clojure (and Anglican) code in cells within a document. Conceptually this is quite similar to [jupyter](http://jupyter.org) notebooks.
 ;;; 
 ;;; Pressing `shift+enter` evaluates a code segment. You can access more commands via the menu, either by clicking the icon in the upper-right corner, or by pressing `alt+g alt+g` (i.e. pressing `alt+g` twice in quick succession). If you are using OS X, you have to use `ctrl` instead of `alt`.
+;;; 
+;;; This environment supports autocompletion. Whenever you are typing the name of a function, you can hit `ctrl+space` to complete the function name and see its documentation.
 ;; **
 
 ;; **
@@ -135,6 +137,19 @@
 ;;; {"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}
 ;; <=
 
+;; @@
+;; nil is equivalent to a logical false
+(if nil true false)
+
+;; all other values are equivalent to a logical true
+(if [] true false)
+(if "" true false)
+(if 0 true false)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"}
+;; <=
+
 ;; **
 ;;; A `let` block is a bit of Clojure which can be used to define variables within a local scope. A `let` block takes an initial argument which defines a sequence of _bindings_, followed by a sequence of statements.
 ;;; 
@@ -235,7 +250,7 @@
 ;; <=
 
 ;; **
-;;; In addition to `fn`, you can use `defn` and `#` 
+;;; In addition to `fn`, you can use `defn` to define a function in the global namespace
 ;; **
 
 ;; @@
@@ -249,6 +264,10 @@
 ;;; {"type":"html","content":"<span class='clj-long'>23</span>","value":"23"}
 ;; <=
 
+;; **
+;;; Clojure also provides the `#(...)` shorthand for defining anonymous functions, in which `%1`, `%2`, etc, can be used to refer to the function arguments.
+;; **
+
 ;; @@
 ;; for short functions, you can use the # macro
 (let [f #(+ (* 2 %1) %2 3)]
@@ -256,6 +275,18 @@
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-long'>23</span>","value":"23"}
+;; <=
+
+;; **
+;;; For inline functions with exactly one argument you can also simply use `%` to refer to the argument.
+;; **
+
+;; @@
+(let [f #(* % %)]
+  (f 4))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>16</span>","value":"16"}
 ;; <=
 
 ;; **
@@ -284,7 +315,7 @@
 ;; **
 
 ;; **
-;;; ### Lists
+;;; ### Lists and Sequences
 ;; **
 
 ;; @@
@@ -296,24 +327,32 @@
 ;; <=
 
 ;; @@
-;; Get the first element of a list
-;; This returns `1`, a number
+;; all lists are sequences
+(seq? (list 1 2 3))
+
+;; but not all sequences are lists
+(list? (seq [1 2 3]))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"}
+;; <=
+
+;; @@
+;; first extracts the first element of sequence
 (first (list 1 2 3))
-;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}
-;; <=
 
-;; @@
-;; rest returns the remainder of the list
+;; rest returns the remainder of the sequence
 (rest (list 1 2 3))
+
+;; cons prepends an item to a list
+(cons 0 (list 1 2 3))
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(2 3)"}
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
 ;; <=
 
 ;; @@
-;; conj appends at the front for lists
+;; for lists conj prepends an item 
 (conj (list 1 2 3) 0)
 
 ;; peek extracts the first element
@@ -401,11 +440,23 @@
 ;; <=
 
 ;; @@
-;; calling rest on a vector returns a sequence
+;; seq casts the vector as a sequence 
+(seq [1 2 3])
+
+;; you can use first on vectors
+;; (as well as any other collections)
+(first [1 2 3])
+
+;; rest returns the remainder of the
+;; vector as a sequence
 (rest [1 2 3])
+
+;; cons prepends an item, again turning
+;; the vector into a sequence
+(cons 0 [1 2 3])
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>(2 3)</span>","value":"(2 3)"}
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
 ;; <=
 
 ;; @@
