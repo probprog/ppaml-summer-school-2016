@@ -96,7 +96,7 @@
 ;; **
 
 ;; @@
-;; This returns the documentation for the '+' operator:
+;; This returns the documentation for the `+` operator:
 (clojure.repl/doc +)
 ;; @@
 ;; ->
@@ -272,6 +272,20 @@
 ;; <-
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-long'>32</span>","value":"32"}
+;; <=
+
+;; @@
+;; and the `when` block, which compiles into an `if` statement followed by a do block. The `if` evaluates the first argument, and then `do`s the rest if true:
+
+;; This is expanded to read "(if 1 (do (println 2) 3))"
+(when 1 (println 2) 3)
+;; @@
+;; ->
+;;; 2
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
 ;; <=
 
 ;; **
