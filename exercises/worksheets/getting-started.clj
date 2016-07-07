@@ -891,7 +891,7 @@
 ;; **
 ;;; The final essential Clojure construct we will want for the exercises is `loop ... recur`. This allows us to easily write looping code.
 ;;; 
-;;; `loop` specifies initial values for a set of names (similar to a `let`-block) and then `recur` passes new values in when running the next loop iteration. This is best demonstrated by example. There are some examples http://clojuredocs.org/clojure.core/loop, and below:
+;;; `loop` specifies initial values for a set of names (similar to a `let`-block) and then `recur` passes new values in when running the next loop iteration. Another way to put this is that `recur` takes the same arguments as the original loop, and effectively calls the loop again but this time starting with the updated values. It is important to ensure that at least one of the parameters is converging towards a value which will trigger the end of the loop (usually via an `if` statement). This is best demonstrated by example. There are some examples http://clojuredocs.org/clojure.core/loop, and below:
 ;; **
 
 ;; @@
