@@ -5,7 +5,7 @@
 ;; **
 
 ;; @@
- (ns clojure-exercises
+(ns clojure-exercises
    (:require [clojure.repl :as repl])
    (:use [anglican.runtime]))
 
@@ -84,7 +84,7 @@
 (defn sum 
   "returns the sum of values in a collection"
   [values]
-  (loop [result ...complete-this...
+  (loop [result nil
          values values]
     (if (seq values)
       (if result
