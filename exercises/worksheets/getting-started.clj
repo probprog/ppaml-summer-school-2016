@@ -346,6 +346,51 @@
 ;; <=
 
 ;; **
+;;; ## Macros
+;;; 
+;;; Sometimes it is preferable, instead of writing a function to operate on some inputs in a predefined way, to instead write a *macro* which actually transforms the code that is inputted to it. We can use the `macroexpand` function to explicitly see what macros are doing. To do this, we must pass the macro and it's arguments to `macroexpand` as a `quote`, by using the quote operator "`'`". A good example is the `when` block we defined earlier, which is actually a macro:
+;; **
+
+;; @@
+(macroexpand '(when 1 2 3))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>if</span>","value":"if"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>do</span>","value":"do"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(do 2 3)"}],"value":"(if 1 (do 2 3))"}
+;; <=
+
+;; **
+;;; We see that `when` literally extracts the first argument and passes it to an `if` statement, and pass the remaining arguments to a `do` block. One of the interesting things about Clojure is that a large chunk of the language is actually defined in terms of macros which perform simplifying code transformations to save effort. An example is the `thread-first` macro: "`->`" which recursively inserts each expression as the first argument of the next expression:
+;; **
+
+;; @@
+(let [c 5]
+
+;; actually evaluates (- (\ (+ c 3) 2) 1)
+(-> c (+ 3) (/ 2) (- 1)))
+
+;; We can see this by using macroexpand (don't forget to quote!)
+(let [c 5]
+(macroexpand '(-> c (+ 3) (/ 2) (- 1))))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>-</span>","value":"-"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>/</span>","value":"/"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>+</span>","value":"+"},{"type":"html","content":"<span class='clj-symbol'>c</span>","value":"c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(+ c 3)"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"(/ (+ c 3) 2)"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"(- (/ (+ c 3) 2) 1)"}
+;; <=
+
+;; @@
+;; There is also a thread-last macro, "->>", which inserts the expression as the last argument of the next expression:
+(let [c 5]
+(println "Using ->> gives: " (macroexpand '(->> c (+ 3) (/ 2) (- 1))))
+(->> c (+ 3) (/ 2) (- 1)))
+;; @@
+;; ->
+;;; Using -&gt;&gt; gives:  (- 1 (/ 2 (+ 3 c)))
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-ratio'>3/4</span>","value":"3/4"}
+;; <=
+
+;; **
 ;;; ## Datastructures
 ;; **
 
