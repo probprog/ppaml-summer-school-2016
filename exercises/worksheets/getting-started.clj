@@ -92,6 +92,48 @@
 ;; <=
 
 ;; **
+;;; When using a new function, it can be helpful to view the Clojure documentation and source code. We do this using the `doc` and `source` commands, defined in the "`clojure.repl`" namespace:
+;; **
+
+;; @@
+;; This returns the documentation for the '+' operator:
+(clojure.repl/doc +)
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.core/+
+;;; ([] [x] [x y] [x y &amp; more])
+;;;   Returns the sum of nums. (+) returns 0. Does not auto-promote
+;;;   longs, will throw on overflow. See also: +&#x27;
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+;; and this returns the source code:
+(clojure.repl/source +)
+;; @@
+;; ->
+;;; (defn +
+;;;   &quot;Returns the sum of nums. (+) returns 0. Does not auto-promote
+;;;   longs, will throw on overflow. See also: +&#x27;&quot;
+;;;   {:inline (nary-inline &#x27;add &#x27;unchecked_add)
+;;;    :inline-arities &gt;1?
+;;;    :added &quot;1.2&quot;}
+;;;   ([] 0)
+;;;   ([x] (cast Number x))
+;;;   ([x y] (. clojure.lang.Numbers (add x y)))
+;;;   ([x y &amp; more]
+;;;      (reduce1 + (+ x y) more)))
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
 ;;; Clojure is dynamically _typed_ and performs type conversion behind the scenes, almost always nicely.  It has types for floating-point numbers, integers, fractions, and booleans.  Clojure also has matrix types, but we won't need them for these exercises, though Anglican supports them (e.g. [Kalman smoother](http://www.robots.ox.ac.uk/~fwood/anglican/examples/viewer/?worksheet=kalman).)
 ;;; 
 ;;; Comparison operators `<`, `>`, `=`, `<=`, `>=` behave as one would expect, and can be used within an `if` statement. The `if` statement takes the form
