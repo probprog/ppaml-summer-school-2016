@@ -352,6 +352,7 @@
 ;; **
 
 ;; @@
+;; If you try this without the quote "'" it will evaulate the when block before trying to macroexpand, and then throw an error!
 (macroexpand '(when 1 2 3))
 ;; @@
 ;; =>
