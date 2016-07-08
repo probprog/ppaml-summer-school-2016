@@ -277,7 +277,7 @@
 ;; @@
 ;; and the `when` block, which compiles into an `if` statement followed by a do block. The `if` evaluates the first argument, and then `do`s the rest if true:
 
-;; This is expanded to read "(if 1 (do (println 2) 3))"
+;; This is expanded to read "(if 1 (do (println 2) 3)) 
 (when 1 (println 2) 3)
 ;; @@
 ;; ->
