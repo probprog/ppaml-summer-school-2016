@@ -7,9 +7,8 @@
 ;; @@
 (ns posterior-inference-exercises
   (:require [anglican.stat :as stat]
+            [anglican.runtime]
             [gorilla-plot.core :as plot]))
-
-(require 'anglican.runtime)
 
 (defn normal-logpdf [x mu sigma]
   (if (> sigma 0)
