@@ -339,7 +339,7 @@
 ;;; 
 ;;; Assuming we are trying to sample from a posterior distribution @@p(x | y) \propto p(x, y)@@, we define an _acceptance ratio_
 ;;; \begin{align}
-;;; A(x \rightarrow x') &= 1 \wedge \frac{p(x', y)q(x | x')}{p(x, y)q(x' | x)}
+;;; A(x \rightarrow x') &= {\rm min} \left(1, ~\frac{p(x', y)q(x | x')}{p(x, y)q(x' | x)} \right)
 ;;; \end{align}
 ;;; After we propose some new value @@x'@@, we then _accept_ it with probability @@A(x \rightarrow x')@@ and "move" to the new position @@x'@@, otherwise we _reject_ it and stay at @@x@@.
 ;;; 
