@@ -6,6 +6,8 @@
   :plugins [[lein-gorilla "0.3.6"]]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [anglican "1.0.0-SNAPSHOT"]
+                 [org.nfrac/cljbox2d.testbed "0.5.0"]
+                 [org.nfrac/cljbox2d "0.5.0"]
                  [net.mikera/core.matrix "0.52.2"]
                  [net.mikera/vectorz-clj "0.44.1"]
                  [net.polyc0l0r/clj-hdf5 "0.2.2-SNAPSHOT"]]
