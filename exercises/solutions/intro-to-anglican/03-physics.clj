@@ -159,10 +159,6 @@
 ;;; {"type":"html","content":"<span class='clj-var'>#&#x27;physics/arrange-bumpers</span>","value":"#'physics/arrange-bumpers"}
 ;; <=
 
-;; @@
-
-;; @@
-
 ;; **
 ;;; Here is some basic inference code; we run lightweight metropolis-hastings for 1500 samples, and then take the last one. This should yield a sample which does reasonably well at the task:
 ;; **
