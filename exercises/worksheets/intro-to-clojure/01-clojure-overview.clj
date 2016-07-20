@@ -34,9 +34,6 @@
   ;;  from anglican.runtime import *
   (:use [anglican.runtime]))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
-;; <=
 
 ;; **
 ;;; ## Clojure Basics
@@ -52,34 +49,22 @@
 ;; Add two numbers
 (+ 1 1)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}
-;; <=
 
 ;; @@
 ;; Subtract: "10 - 3"
 (- 10 3)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>7</span>","value":"7"}
-;; <=
 
 ;; @@
 ;; Multiply, divide
 (* 2 5)
 (/ 10.0 3.3)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-double'>3.0303030303030303</span>","value":"3.0303030303030303"}
-;; <=
 
 ;; @@
 ;; Compound arithmetic expressions: "(10 * (2.1 + 4.3) / 2)"
 (/ (* 10 (+ 2.1 4.3)) 2)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-double'>32.0</span>","value":"32.0"}
-;; <=
 
 ;; @@
 ;; Anglican supplies functions for `log`, `exp`, and more:
@@ -87,9 +72,6 @@
 (log (+ 1 1))
 (sqrt 5)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-double'>2.23606797749979</span>","value":"2.23606797749979"}
-;; <=
 
 ;; **
 ;;; When using a new function, it can be helpful to view the Clojure documentation and source code. We do this using the `doc` and `source` commands, defined in the "`clojure.repl`" namespace:
@@ -99,39 +81,11 @@
 ;; This returns the documentation for the `+` operator:
 (clojure.repl/doc +)
 ;; @@
-;; ->
-;;; -------------------------
-;;; clojure.core/+
-;;; ([] [x] [x y] [x y &amp; more])
-;;;   Returns the sum of nums. (+) returns 0. Does not auto-promote
-;;;   longs, will throw on overflow. See also: +&#x27;
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
-;; <=
 
 ;; @@
 ;; and this returns the source code:
 (clojure.repl/source +)
 ;; @@
-;; ->
-;;; (defn +
-;;;   &quot;Returns the sum of nums. (+) returns 0. Does not auto-promote
-;;;   longs, will throw on overflow. See also: +&#x27;&quot;
-;;;   {:inline (nary-inline &#x27;add &#x27;unchecked_add)
-;;;    :inline-arities &gt;1?
-;;;    :added &quot;1.2&quot;}
-;;;   ([] 0)
-;;;   ([x] (cast Number x))
-;;;   ([x y] (. clojure.lang.Numbers (add x y)))
-;;;   ([x y &amp; more]
-;;;      (reduce1 + (+ x y) more)))
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
-;; <=
 
 ;; **
 ;;; Clojure is dynamically _typed_ and performs type conversion behind the scenes, almost always nicely.  It has types for floating-point numbers, integers, fractions, and booleans.  Clojure also has matrix types, but we won't need them for these exercises, though Anglican supports them (e.g. [Kalman smoother](http://www.robots.ox.ac.uk/~fwood/anglican/examples/viewer/?worksheet=kalman).)
@@ -151,33 +105,21 @@
 ;; this evaluates to true
 (< 4 10)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"}
-;; <=
 
 ;; @@
 ;; this evaluates to 1
 (if (> 3 2) 1 -1)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}
-;; <=
 
 ;; @@
 ;; this evaluates to 20
 (if (<= 3 3) (+ 10 10) 0)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>20</span>","value":"20"}
-;; <=
 
 ;; @@
 ;; this evaluates to 4
 (+ (if (< 4 5) 1 2) 3)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}
-;; <=
 
 ;; @@
 ;; nil is equivalent to a logical false
@@ -188,9 +130,6 @@
 (if "" true false)
 (if 0 true false)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"}
-;; <=
 
 ;; **
 ;;; A `let` block is a bit of Clojure which can be used to define variables within a local scope. A `let` block takes an initial argument which defines a sequence of _bindings_, followed by a sequence of statements.
@@ -206,9 +145,6 @@
       y 2]
   (+ x y))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>12</span>","value":"12"}
-;; <=
 
 ;; @@
 ;; also evaluates to 12!
@@ -217,9 +153,6 @@
   (* x 3)
   (+ x y))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>12</span>","value":"12"}
-;; <=
 
 ;; @@
 ;; ... but this evaluates to 32
@@ -227,9 +160,6 @@
       y 2]
   (+ (* x 3) y))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>32</span>","value":"32"}
-;; <=
 
 ;; @@
 ;; ... and so does this
@@ -238,9 +168,6 @@
       x (* x 3)]
   (+ x y))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>32</span>","value":"32"}
-;; <=
 
 ;; @@
 ;; this has a side-effect, printing to the console,
@@ -250,13 +177,6 @@
   (println "x times 3 =" (* x 3))
   (+ x y))
 ;; @@
-;; ->
-;;; x times 3 = 30
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>12</span>","value":"12"}
-;; <=
 
 ;; @@
 ;; there is also the `do` block, which is like let, but has no bindings
@@ -265,14 +185,6 @@
   (println "1 + 1 ="  (+ 1 1))
   (+ (* 10 3) 2))
 ;; @@
-;; ->
-;;; 10 = 10
-;;; 1 + 1 = 2
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>32</span>","value":"32"}
-;; <=
 
 ;; @@
 ;; and the `when` block, which compiles into an `if` statement followed by a do block. The `if` evaluates the first argument, and then `do`s the rest if true:
@@ -280,13 +192,6 @@
 ;; This is expanded to read "(if 1 (do (println 2) 3)) 
 (when 1 (println 2) 3)
 ;; @@
-;; ->
-;;; 2
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
-;; <=
 
 ;; **
 ;;; ## Functions
@@ -301,9 +206,6 @@
               (+ (* 2 x) y 3))]
   (my-fn 5 10))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>23</span>","value":"23"}
-;; <=
 
 ;; **
 ;;; In addition to `fn`, you can use `defn` to define a function in the global namespace
@@ -316,9 +218,6 @@
 
 (my-fn 5 10)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>23</span>","value":"23"}
-;; <=
 
 ;; **
 ;;; Clojure also provides the `#(...)` shorthand for defining anonymous functions, in which `%1`, `%2`, etc, can be used to refer to the function arguments.
@@ -329,9 +228,6 @@
 (let [f #(+ (* 2 %1) %2 3)]
   (f 5 10))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>23</span>","value":"23"}
-;; <=
 
 ;; **
 ;;; For inline functions with exactly one argument you can also simply use `%` to refer to the argument.
@@ -341,9 +237,6 @@
 (let [f #(* % %)]
   (f 4))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>16</span>","value":"16"}
-;; <=
 
 ;; **
 ;;; ## Macros
@@ -355,9 +248,6 @@
 ;; If you try this without the quote "'" it will evaulate the when block before trying to macroexpand, and then throw an error!
 (macroexpand '(when 1 2 3))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>if</span>","value":"if"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>do</span>","value":"do"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(do 2 3)"}],"value":"(if 1 (do 2 3))"}
-;; <=
 
 ;; **
 ;;; We see that `when` literally extracts the first argument and passes it to an `if` statement, and pass the remaining arguments to a `do` block. One of the interesting things about Clojure is that a large chunk of the language is actually defined in terms of macros which perform simplifying code transformations to save effort. An example is the `thread-first` macro: "`->`" which recursively inserts each expression as the first argument of the next expression:
@@ -373,9 +263,6 @@
 (let [c 5]
 (macroexpand '(-> c (+ 3) (/ 2) (- 1))))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>-</span>","value":"-"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>/</span>","value":"/"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>+</span>","value":"+"},{"type":"html","content":"<span class='clj-symbol'>c</span>","value":"c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(+ c 3)"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"(/ (+ c 3) 2)"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"(- (/ (+ c 3) 2) 1)"}
-;; <=
 
 ;; @@
 ;; There is also a thread-last macro, "->>", which inserts the expression as the last argument of the next expression:
@@ -383,13 +270,6 @@
 (println "Using ->> gives: " (macroexpand '(->> c (+ 3) (/ 2) (- 1))))
 (->> c (+ 3) (/ 2) (- 1)))
 ;; @@
-;; ->
-;;; Using -&gt;&gt; gives:  (- 1 (/ 2 (+ 3 c)))
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-ratio'>3/4</span>","value":"3/4"}
-;; <=
 
 ;; **
 ;;; ## Datastructures
@@ -424,9 +304,6 @@
 ;; Create a list, explicitly
 (list 1 2 3)
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(1 2 3)"}
-;; <=
 
 ;; @@
 ;; all lists are sequences
@@ -435,9 +312,6 @@
 ;; but not all sequences are lists
 (list? (seq [1 2 3]))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"}
-;; <=
 
 ;; @@
 ;; first extracts the first element of sequence
@@ -449,9 +323,6 @@
 ;; cons prepends an item to a list
 (cons 0 (list 1 2 3))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
-;; <=
 
 ;; @@
 ;; for lists conj prepends an item 
@@ -463,42 +334,27 @@
 ;; pop removes the first element
 (pop (list 1 2 3))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(2 3)"}
-;; <=
 
 ;; @@
 ;; Check the length of a list using `count`
 (count (list 1 2 3 4))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>4</span>","value":"4"}
-;; <=
 
 ;; @@
 ;; Create a list of 5 elements, all of which are the output of "1 + 1"
 (repeat 5 (+ 1 1))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>(2 2 2 2 2)</span>","value":"(2 2 2 2 2)"}
-;; <=
 
 ;; @@
 ;; Create a list of integers in a certain range
 (range 5)
 (range 2 8)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>(2 3 4 5 6 7)</span>","value":"(2 3 4 5 6 7)"}
-;; <=
 
 ;; @@
 ;; Create a list by repeatedly calling a function
 (repeatedly 3 (fn [] (+ 10 20)))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>30</span>","value":"30"},{"type":"html","content":"<span class='clj-long'>30</span>","value":"30"},{"type":"html","content":"<span class='clj-long'>30</span>","value":"30"}],"value":"(30 30 30)"}
-;; <=
 
 ;; @@
 ;; Looking up an element in a list requires linear time
@@ -506,14 +362,6 @@
   (time (nth numbers 1000000))
   (time (nth numbers 10000000)))
 ;; @@
-;; ->
-;;; &quot;Elapsed time: 13.452546 msecs&quot;
-;;; &quot;Elapsed time: 113.157086 msecs&quot;
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>20000000</span>","value":"20000000"}
-;; <=
 
 ;; **
 ;;; ### Vectors
@@ -523,9 +371,6 @@
 ;; Create a vector by using square brackets
 [1 2 3]
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[1 2 3]"}
-;; <=
 
 ;; @@
 ;; conj appends to the end for vectors
@@ -537,9 +382,6 @@
 ;; pop removes the last element
 (pop [1 2 3])
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[1 2]"}
-;; <=
 
 ;; @@
 ;; seq casts the vector as a sequence 
@@ -557,9 +399,6 @@
 ;; the vector into a sequence
 (cons 0 [1 2 3])
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>0</span>","value":"0"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(0 1 2 3)"}
-;; <=
 
 ;; @@
 ;; Looking up an element in a vector requires constant time
@@ -567,23 +406,12 @@
   (time (nth numbers 1000000))
   (time (nth numbers 10000000)))
 ;; @@
-;; ->
-;;; &quot;Elapsed time: 0.032317 msecs&quot;
-;;; &quot;Elapsed time: 6.74E-4 msecs&quot;
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>20000000</span>","value":"20000000"}
-;; <=
 
 ;; @@
 ;; vectors can be used as functions
 (let [v [1 2 3]]
   (v 2))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
-;; <=
 
 ;; **
 ;;; ### Hash maps
@@ -593,35 +421,23 @@
 ;; this is a hash map literal
 {:a 1 :b 2 :c 3}
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"}],"value":"{:a 1, :b 2, :c 3}"}
-;; <=
 
 ;; @@
 ;; entries in hash maps are customarily labeled with keywords
 (keyword "a")
 (class :a)
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-class'>clojure.lang.Keyword</span>","value":"clojure.lang.Keyword"}
-;; <=
 
 ;; @@
 ;; however, keys in a hash map can be any clojure object
 {:a 1 "b" 2 [3 4] 5}
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-string'>&quot;b&quot;</span>","value":"\"b\""},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[\"b\" 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[3 4]"},{"type":"html","content":"<span class='clj-long'>5</span>","value":"5"}],"value":"[[3 4] 5]"}],"value":"{:a 1, \"b\" 2, [3 4] 5}"}
-;; <=
 
 ;; @@
 ;; get can be used to extract an entry from a hash map
 (let [m {:a 1 :b 2 :c 3}]
   (get m :a))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}
-;; <=
 
 ;; @@
 ;; a get command can be given a value for missing entries
@@ -629,63 +445,42 @@
   (get m :d 4))
 
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}
-;; <=
 
 ;; @@
 ;; the assoc command inserts an entry into a hash map
 (let [m {:a 1 :b 2 :c 3}]
   (assoc m :d 4))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
-;; <=
 
 ;; @@
 ;; calling seq on a hash map produces a sequence of pairs
 (let [m {:a 1 :b 2 :c 3}]
   (seq m))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>([:a 1] [:b 2] [:c 3])</span>","value":"([:a 1] [:b 2] [:c 3])"}
-;; <=
 
 ;; @@
 ;; conj can be used to insert into a hash map
 (let [m {:a 1 :b 2 :c 3}]
   (conj m [:d 4]))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
-;; <=
 
 ;; @@
 ;; like vectors, hash maps can be used as functions
 (let [m {:a 1 :b 2 :c 3}]
   (m :c))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
-;; <=
 
 ;; @@
 ;; keywords start with :, and can be used as functions as well
 (let [m {:a 1 :b 2 :c 3}]
   (:c m))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
-;; <=
 
 ;; @@
 ;; under the hood, hash maps can have two different types
 (array-map :a 1 :b 2 :c 3)
 (hash-map :a 1 :b 2 :c 3)
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:c 3, :b 2, :a 1}"}
-;; <=
 
 ;; @@
 ;; array maps are ordered
@@ -695,9 +490,6 @@
 (let [m (array-map :a 1 :b 2 :c 3)]
   (assoc m :d 4))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"}],"value":"{:a 1, :b 2, :c 3, :d 4}"}
-;; <=
 
 ;; @@
 ;; hash maps are unordered
@@ -707,9 +499,6 @@
 (let [m (hash-map :a 1 :b 2 :c 3)]
   (assoc m :d 4))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:c 3, :b 2, :d 4, :a 1}"}
-;; <=
 
 ;; @@
 ;; small literals are array maps by default
@@ -721,9 +510,6 @@
  :e 5 :f 6 :g 7 :h 8
  :i 9}
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:e</span>","value":":e"},{"type":"html","content":"<span class='clj-long'>5</span>","value":"5"}],"value":"[:e 5]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:g</span>","value":":g"},{"type":"html","content":"<span class='clj-long'>7</span>","value":"7"}],"value":"[:g 7]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:c</span>","value":":c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[:c 3]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:h</span>","value":":h"},{"type":"html","content":"<span class='clj-long'>8</span>","value":"8"}],"value":"[:h 8]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:b</span>","value":":b"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[:b 2]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:d</span>","value":":d"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"}],"value":"[:d 4]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:f</span>","value":":f"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}],"value":"[:f 6]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:i</span>","value":":i"},{"type":"html","content":"<span class='clj-long'>9</span>","value":"9"}],"value":"[:i 9]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:a</span>","value":":a"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"[:a 1]"}],"value":"{:e 5, :g 7, :c 3, :h 8, :b 2, :d 4, :f 6, :i 9, :a 1}"}
-;; <=
 
 ;; **
 ;;; ## Lazy sequences
@@ -751,9 +537,6 @@
   ([]
    (inf-range 0 1)))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/inf-range</span>","value":"#'getting-started/inf-range"}
-;; <=
 
 ;; **
 ;;; Don't *ever* try to evaluate lazy sequence in the repl, since this will try to print out an infinite sequence
@@ -770,9 +553,6 @@
 ;; @@
 (def my-range (inf-range))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/my-range</span>","value":"#'getting-started/my-range"}
-;; <=
 
 ;; **
 ;;; Elements are not evaluated until you accessed them the first time, but are then stored until they need to be garbage collected. To see this, let's write a version of range that is artificially slowed down
@@ -787,9 +567,6 @@
         	    (slow-range (inc start)))))
   ([] (slow-range 0)))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;getting-started/slow-range</span>","value":"#'getting-started/slow-range"}
-;; <=
 
 ;; @@
 (def my-range (slow-range))
@@ -797,14 +574,6 @@
 (time (first (drop 10 my-range)))
 (time (first (drop 10 my-range)))
 ;; @@
-;; ->
-;;; &quot;Elapsed time: 1101.491567 msecs&quot;
-;;; &quot;Elapsed time: 0.115022 msecs&quot;
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}
-;; <=
 
 ;; **
 ;;; ## Map, Reduce, and Loop
@@ -822,18 +591,12 @@
        (* x x))
      (list 1 2 3 4))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"},{"type":"html","content":"<span class='clj-long'>9</span>","value":"9"},{"type":"html","content":"<span class='clj-long'>16</span>","value":"16"}],"value":"(1 4 9 16)"}
-;; <=
 
 ;; @@
 ;; Here's a different way of writing the above:
 (map #(pow % 2)
      (range 1 5))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-double'>1.0</span>","value":"1.0"},{"type":"html","content":"<span class='clj-double'>4.0</span>","value":"4.0"},{"type":"html","content":"<span class='clj-double'>9.0</span>","value":"9.0"},{"type":"html","content":"<span class='clj-double'>16.0</span>","value":"16.0"}],"value":"(1.0 4.0 9.0 16.0)"}
-;; <=
 
 ;; @@
 ;; Apply the function f(x,y) = x + 2y to the x values `(1 2 3)` and the y values `(10 9 8)`
@@ -842,25 +605,16 @@
      [1 2 3]   ; these are values x1, x2, x3
      [10 9 8]) ; these are values y1, y2, y3
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>21</span>","value":"21"},{"type":"html","content":"<span class='clj-long'>20</span>","value":"20"},{"type":"html","content":"<span class='clj-long'>19</span>","value":"19"}],"value":"(21 20 19)"}
-;; <=
 
 ;; @@
 ;; Calculate the sum of elements
 (reduce + 0.0 [1 2 3])
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-double'>6.0</span>","value":"6.0"}
-;; <=
 
 ;; @@
 ;; This does the same thing, but produces a long
 (reduce + [1 2 3])
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}
-;; <=
 
 ;; @@
 ;; This creates a vector containing only the positive elements
@@ -874,9 +628,6 @@
         ;; values for x
         [-1 1 -2 2 -3 3])
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"[1 2 3]"}
-;; <=
 
 ;; @@
 ;; Clojure provides a number of other functions that loop over
@@ -885,9 +636,6 @@
 (filter #(> % 0) 
         [-1 1 -2 2 -3 3])
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(1 2 3)"}
-;; <=
 
 ;; **
 ;;; The final essential Clojure construct we will want for the exercises is `loop ... recur`. This allows us to easily write looping code.
@@ -903,22 +651,6 @@
       (println x)
       (recur next-x))))
 ;; @@
-;; ->
-;;; 1
-;;; 2
-;;; 3
-;;; 4
-;;; 5
-;;; 6
-;;; 7
-;;; 8
-;;; 9
-;;; 10
-;;; 
-;; <-
-;; =>
-;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
-;; <=
 
 ;; @@
 ;; this code loops from x=10 down to x=0, 
@@ -930,9 +662,6 @@
     (recur (- x 1)
            (conj y (* 2 x)))))
 ;; @@
-;; =>
-;;; {"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>20</span>","value":"20"},{"type":"html","content":"<span class='clj-long'>18</span>","value":"18"},{"type":"html","content":"<span class='clj-long'>16</span>","value":"16"},{"type":"html","content":"<span class='clj-long'>14</span>","value":"14"},{"type":"html","content":"<span class='clj-long'>12</span>","value":"12"},{"type":"html","content":"<span class='clj-long'>10</span>","value":"10"},{"type":"html","content":"<span class='clj-long'>8</span>","value":"8"},{"type":"html","content":"<span class='clj-long'>6</span>","value":"6"},{"type":"html","content":"<span class='clj-long'>4</span>","value":"4"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"[20 18 16 14 12 10 8 6 4 2]"}
-;; <=
 
 ;; **
 ;;; ## Keyboard Shortcuts
