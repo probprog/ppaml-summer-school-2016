@@ -5,7 +5,7 @@
 ;; **
 
 ;; @@
- (ns clojure-exercises
+(ns clojure-exercises
    (:require [clojure.repl :as repl])
    (:use [anglican.runtime]))
 
@@ -84,7 +84,7 @@
 (defn sum 
   "returns the sum of values in a collection"
   [values]
-  (loop [result ...complete-this...
+  (loop [result nil
          values values]
     (if (seq values)
       (if result
@@ -754,7 +754,7 @@
 ;; <=
 
 ;; **
-;;; Now let's write a function that can handle sequences. For each element in a list or vector, call `numerify` recursively, and make sure the result always has the same type as 
+;;; Now let's write a function that can handle sequences. For each element in a list or vector, call `numerify` recursively, and make sure the result always has the same type as the input.
 ;; **
 
 ;; @@
@@ -767,7 +767,7 @@
     (string? v)
     ...complete-this...
     (seq? v)
-    ...complete-this...
+    ...complete-this...		;; Hint: Use map!
 	:else v))
 ;; @@
 ;; =>
@@ -1072,7 +1072,7 @@
 ;; <=
 
 ;; **
-;;; You have now written a function that can walk over arbitrary nested Clojure data types in just over 10 lines of code. That's pretty ninja, especially if this is your first day as a Clojure programmer. Test your result! 
+;;; You have now written a function that can walk an arbitrary nested Clojure data types in just over 10 lines of code. That's pretty ninja, especially if this is your first day as a Clojure programmer. Test your result! 
 ;; **
 
 ;; @@
