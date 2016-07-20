@@ -28,9 +28,8 @@
 
 ;; @@
 (ns hello-world
-  (:require [gorilla-plot.core :as plot]
-            [anglican.stat :as stat])
-  (:use [anglican core runtime emit]))
+  (:require [gorilla-plot.core :as plot])
+  (:use [anglican core runtime emit stat]))
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
@@ -87,7 +86,7 @@
 (sample* (discrete [0.3 0.2 0.5]))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-long'>0</span>","value":"0"}
+;;; {"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}
 ;; <=
 
 ;; @@
@@ -102,7 +101,7 @@
   (repeatedly 10 #(sample* normal-dist)))
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-double'>2.581874431712753</span>","value":"2.581874431712753"},{"type":"html","content":"<span class='clj-double'>-0.7205541974612022</span>","value":"-0.7205541974612022"},{"type":"html","content":"<span class='clj-double'>-1.0184322451621584</span>","value":"-1.0184322451621584"},{"type":"html","content":"<span class='clj-double'>6.226769602229815</span>","value":"6.226769602229815"},{"type":"html","content":"<span class='clj-double'>-1.3808231333859209</span>","value":"-1.3808231333859209"},{"type":"html","content":"<span class='clj-double'>4.377059472290465</span>","value":"4.377059472290465"},{"type":"html","content":"<span class='clj-double'>-0.04468890357847988</span>","value":"-0.04468890357847988"},{"type":"html","content":"<span class='clj-double'>-0.6734582323793672</span>","value":"-0.6734582323793672"},{"type":"html","content":"<span class='clj-double'>2.6715689053169225</span>","value":"2.6715689053169225"},{"type":"html","content":"<span class='clj-double'>-0.3197285025930008</span>","value":"-0.3197285025930008"}],"value":"(2.581874431712753 -0.7205541974612022 -1.0184322451621584 6.226769602229815 -1.3808231333859209 4.377059472290465 -0.04468890357847988 -0.6734582323793672 2.6715689053169225 -0.3197285025930008)"}
+;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-double'>-0.6089063750002284</span>","value":"-0.6089063750002284"},{"type":"html","content":"<span class='clj-double'>1.5268745319621093</span>","value":"1.5268745319621093"},{"type":"html","content":"<span class='clj-double'>5.677406578535351</span>","value":"5.677406578535351"},{"type":"html","content":"<span class='clj-double'>1.1344290522840268</span>","value":"1.1344290522840268"},{"type":"html","content":"<span class='clj-double'>1.3688634899415546</span>","value":"1.3688634899415546"},{"type":"html","content":"<span class='clj-double'>-1.8668847052088822</span>","value":"-1.8668847052088822"},{"type":"html","content":"<span class='clj-double'>1.6997996979769423</span>","value":"1.6997996979769423"},{"type":"html","content":"<span class='clj-double'>2.5362611979408687</span>","value":"2.5362611979408687"},{"type":"html","content":"<span class='clj-double'>1.9843325729708183</span>","value":"1.9843325729708183"},{"type":"html","content":"<span class='clj-double'>-0.8164700554931028</span>","value":"-0.8164700554931028"}],"value":"(-0.6089063750002284 1.5268745319621093 5.677406578535351 1.1344290522840268 1.3688634899415546 -1.8668847052088822 1.6997996979769423 2.5362611979408687 1.9843325729708183 -0.8164700554931028)"}
 ;; <=
 
 ;; @@
@@ -143,7 +142,7 @@
     (> theta 0.7)))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world-3/one-flip</span>","value":"#'hello-world-3/one-flip"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/one-flip</span>","value":"#'hello-world/one-flip"}
 ;; <=
 
 ;; **
@@ -173,7 +172,7 @@
 (def one-flip-posterior (conditional one-flip :lmh))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world-3/one-flip-posterior</span>","value":"#'hello-world-3/one-flip-posterior"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/one-flip-posterior</span>","value":"#'hello-world/one-flip-posterior"}
 ;; <=
 
 ;; **
@@ -188,7 +187,7 @@
 (def true-flip-posterior (one-flip-posterior true))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world-3/true-flip-posterior</span>","value":"#'hello-world-3/true-flip-posterior"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/true-flip-posterior</span>","value":"#'hello-world/true-flip-posterior"}
 ;; <=
 
 ;; **
@@ -217,7 +216,7 @@
                #(sample* true-flip-posterior)))
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-long'>439</span>","value":"439"}],"value":"[true 439]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-long'>561</span>","value":"561"}],"value":"[false 561]"}],"value":"{true 439, false 561}"}
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-long'>448</span>","value":"448"}],"value":"[true 448]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-long'>552</span>","value":"552"}],"value":"[false 552]"}],"value":"{true 448, false 552}"}
 ;; <=
 
 ;; **
@@ -231,7 +230,7 @@
   :bins 100 :normalize :probability)
 ;; @@
 ;; =>
-;;; {"type":"vega","content":{"width":400,"height":247.2187957763672,"padding":{"top":10,"left":55,"bottom":40,"right":10},"data":[{"name":"5102eb18-bd99-4293-8b23-c0c3a2ac71d2","values":[{"x":0.0,"y":0},{"x":0.010000000000000002,"y":0.5525},{"x":0.020000000000000004,"y":0.0},{"x":0.030000000000000006,"y":0.0},{"x":0.04000000000000001,"y":0.0},{"x":0.05000000000000001,"y":0.0},{"x":0.06000000000000001,"y":0.0},{"x":0.07,"y":0.0},{"x":0.08000000000000002,"y":0.0},{"x":0.09000000000000002,"y":0.0},{"x":0.10000000000000003,"y":0.0},{"x":0.11000000000000004,"y":0.0},{"x":0.12000000000000005,"y":0.0},{"x":0.13000000000000006,"y":0.0},{"x":0.14000000000000007,"y":0.0},{"x":0.15000000000000008,"y":0.0},{"x":0.1600000000000001,"y":0.0},{"x":0.1700000000000001,"y":0.0},{"x":0.1800000000000001,"y":0.0},{"x":0.1900000000000001,"y":0.0},{"x":0.20000000000000012,"y":0.0},{"x":0.21000000000000013,"y":0.0},{"x":0.22000000000000014,"y":0.0},{"x":0.23000000000000015,"y":0.0},{"x":0.24000000000000016,"y":0.0},{"x":0.25000000000000017,"y":0.0},{"x":0.2600000000000002,"y":0.0},{"x":0.2700000000000002,"y":0.0},{"x":0.2800000000000002,"y":0.0},{"x":0.2900000000000002,"y":0.0},{"x":0.3000000000000002,"y":0.0},{"x":0.3100000000000002,"y":0.0},{"x":0.32000000000000023,"y":0.0},{"x":0.33000000000000024,"y":0.0},{"x":0.34000000000000025,"y":0.0},{"x":0.35000000000000026,"y":0.0},{"x":0.36000000000000026,"y":0.0},{"x":0.3700000000000003,"y":0.0},{"x":0.3800000000000003,"y":0.0},{"x":0.3900000000000003,"y":0.0},{"x":0.4000000000000003,"y":0.0},{"x":0.4100000000000003,"y":0.0},{"x":0.4200000000000003,"y":0.0},{"x":0.4300000000000003,"y":0.0},{"x":0.44000000000000034,"y":0.0},{"x":0.45000000000000034,"y":0.0},{"x":0.46000000000000035,"y":0.0},{"x":0.47000000000000036,"y":0.0},{"x":0.48000000000000037,"y":0.0},{"x":0.4900000000000004,"y":0.0},{"x":0.5000000000000003,"y":0.0},{"x":0.5100000000000003,"y":0.0},{"x":0.5200000000000004,"y":0.0},{"x":0.5300000000000004,"y":0.0},{"x":0.5400000000000004,"y":0.0},{"x":0.5500000000000004,"y":0.0},{"x":0.5600000000000004,"y":0.0},{"x":0.5700000000000004,"y":0.0},{"x":0.5800000000000004,"y":0.0},{"x":0.5900000000000004,"y":0.0},{"x":0.6000000000000004,"y":0.0},{"x":0.6100000000000004,"y":0.0},{"x":0.6200000000000004,"y":0.0},{"x":0.6300000000000004,"y":0.0},{"x":0.6400000000000005,"y":0.0},{"x":0.6500000000000005,"y":0.0},{"x":0.6600000000000005,"y":0.0},{"x":0.6700000000000005,"y":0.0},{"x":0.6800000000000005,"y":0.0},{"x":0.6900000000000005,"y":0.0},{"x":0.7000000000000005,"y":0.0},{"x":0.7100000000000005,"y":0.0},{"x":0.7200000000000005,"y":0.0},{"x":0.7300000000000005,"y":0.0},{"x":0.7400000000000005,"y":0.0},{"x":0.7500000000000006,"y":0.0},{"x":0.7600000000000006,"y":0.0},{"x":0.7700000000000006,"y":0.0},{"x":0.7800000000000006,"y":0.0},{"x":0.7900000000000006,"y":0.0},{"x":0.8000000000000006,"y":0.0},{"x":0.8100000000000006,"y":0.0},{"x":0.8200000000000006,"y":0.0},{"x":0.8300000000000006,"y":0.0},{"x":0.8400000000000006,"y":0.0},{"x":0.8500000000000006,"y":0.0},{"x":0.8600000000000007,"y":0.0},{"x":0.8700000000000007,"y":0.0},{"x":0.8800000000000007,"y":0.0},{"x":0.8900000000000007,"y":0.0},{"x":0.9000000000000007,"y":0.0},{"x":0.9100000000000007,"y":0.0},{"x":0.9200000000000007,"y":0.0},{"x":0.9300000000000007,"y":0.0},{"x":0.9400000000000007,"y":0.0},{"x":0.9500000000000007,"y":0.0},{"x":0.9600000000000007,"y":0.0},{"x":0.9700000000000008,"y":0.0},{"x":0.9800000000000008,"y":0.0},{"x":0.9900000000000008,"y":0.0},{"x":1.0000000000000007,"y":0.4475},{"x":1.0100000000000007,"y":0}]}],"marks":[{"type":"line","from":{"data":"5102eb18-bd99-4293-8b23-c0c3a2ac71d2"},"properties":{"enter":{"x":{"scale":"x","field":"data.x"},"y":{"scale":"y","field":"data.y"},"interpolate":{"value":"step-before"},"fill":{"value":"steelblue"},"fillOpacity":{"value":0.4},"stroke":{"value":"steelblue"},"strokeWidth":{"value":2},"strokeOpacity":{"value":1}}}}],"scales":[{"name":"x","type":"linear","range":"width","zero":false,"domain":{"data":"5102eb18-bd99-4293-8b23-c0c3a2ac71d2","field":"data.x"}},{"name":"y","type":"linear","range":"height","nice":true,"zero":false,"domain":{"data":"5102eb18-bd99-4293-8b23-c0c3a2ac71d2","field":"data.y"}}],"axes":[{"type":"x","scale":"x"},{"type":"y","scale":"y"}]},"value":"#gorilla_repl.vega.VegaView{:content {:width 400, :height 247.2188, :padding {:top 10, :left 55, :bottom 40, :right 10}, :data [{:name \"5102eb18-bd99-4293-8b23-c0c3a2ac71d2\", :values ({:x 0.0, :y 0} {:x 0.010000000000000002, :y 0.5525} {:x 0.020000000000000004, :y 0.0} {:x 0.030000000000000006, :y 0.0} {:x 0.04000000000000001, :y 0.0} {:x 0.05000000000000001, :y 0.0} {:x 0.06000000000000001, :y 0.0} {:x 0.07, :y 0.0} {:x 0.08000000000000002, :y 0.0} {:x 0.09000000000000002, :y 0.0} {:x 0.10000000000000003, :y 0.0} {:x 0.11000000000000004, :y 0.0} {:x 0.12000000000000005, :y 0.0} {:x 0.13000000000000006, :y 0.0} {:x 0.14000000000000007, :y 0.0} {:x 0.15000000000000008, :y 0.0} {:x 0.1600000000000001, :y 0.0} {:x 0.1700000000000001, :y 0.0} {:x 0.1800000000000001, :y 0.0} {:x 0.1900000000000001, :y 0.0} {:x 0.20000000000000012, :y 0.0} {:x 0.21000000000000013, :y 0.0} {:x 0.22000000000000014, :y 0.0} {:x 0.23000000000000015, :y 0.0} {:x 0.24000000000000016, :y 0.0} {:x 0.25000000000000017, :y 0.0} {:x 0.2600000000000002, :y 0.0} {:x 0.2700000000000002, :y 0.0} {:x 0.2800000000000002, :y 0.0} {:x 0.2900000000000002, :y 0.0} {:x 0.3000000000000002, :y 0.0} {:x 0.3100000000000002, :y 0.0} {:x 0.32000000000000023, :y 0.0} {:x 0.33000000000000024, :y 0.0} {:x 0.34000000000000025, :y 0.0} {:x 0.35000000000000026, :y 0.0} {:x 0.36000000000000026, :y 0.0} {:x 0.3700000000000003, :y 0.0} {:x 0.3800000000000003, :y 0.0} {:x 0.3900000000000003, :y 0.0} {:x 0.4000000000000003, :y 0.0} {:x 0.4100000000000003, :y 0.0} {:x 0.4200000000000003, :y 0.0} {:x 0.4300000000000003, :y 0.0} {:x 0.44000000000000034, :y 0.0} {:x 0.45000000000000034, :y 0.0} {:x 0.46000000000000035, :y 0.0} {:x 0.47000000000000036, :y 0.0} {:x 0.48000000000000037, :y 0.0} {:x 0.4900000000000004, :y 0.0} {:x 0.5000000000000003, :y 0.0} {:x 0.5100000000000003, :y 0.0} {:x 0.5200000000000004, :y 0.0} {:x 0.5300000000000004, :y 0.0} {:x 0.5400000000000004, :y 0.0} {:x 0.5500000000000004, :y 0.0} {:x 0.5600000000000004, :y 0.0} {:x 0.5700000000000004, :y 0.0} {:x 0.5800000000000004, :y 0.0} {:x 0.5900000000000004, :y 0.0} {:x 0.6000000000000004, :y 0.0} {:x 0.6100000000000004, :y 0.0} {:x 0.6200000000000004, :y 0.0} {:x 0.6300000000000004, :y 0.0} {:x 0.6400000000000005, :y 0.0} {:x 0.6500000000000005, :y 0.0} {:x 0.6600000000000005, :y 0.0} {:x 0.6700000000000005, :y 0.0} {:x 0.6800000000000005, :y 0.0} {:x 0.6900000000000005, :y 0.0} {:x 0.7000000000000005, :y 0.0} {:x 0.7100000000000005, :y 0.0} {:x 0.7200000000000005, :y 0.0} {:x 0.7300000000000005, :y 0.0} {:x 0.7400000000000005, :y 0.0} {:x 0.7500000000000006, :y 0.0} {:x 0.7600000000000006, :y 0.0} {:x 0.7700000000000006, :y 0.0} {:x 0.7800000000000006, :y 0.0} {:x 0.7900000000000006, :y 0.0} {:x 0.8000000000000006, :y 0.0} {:x 0.8100000000000006, :y 0.0} {:x 0.8200000000000006, :y 0.0} {:x 0.8300000000000006, :y 0.0} {:x 0.8400000000000006, :y 0.0} {:x 0.8500000000000006, :y 0.0} {:x 0.8600000000000007, :y 0.0} {:x 0.8700000000000007, :y 0.0} {:x 0.8800000000000007, :y 0.0} {:x 0.8900000000000007, :y 0.0} {:x 0.9000000000000007, :y 0.0} {:x 0.9100000000000007, :y 0.0} {:x 0.9200000000000007, :y 0.0} {:x 0.9300000000000007, :y 0.0} {:x 0.9400000000000007, :y 0.0} {:x 0.9500000000000007, :y 0.0} {:x 0.9600000000000007, :y 0.0} {:x 0.9700000000000008, :y 0.0} {:x 0.9800000000000008, :y 0.0} {:x 0.9900000000000008, :y 0.0} {:x 1.0000000000000007, :y 0.4475} {:x 1.0100000000000007, :y 0})}], :marks [{:type \"line\", :from {:data \"5102eb18-bd99-4293-8b23-c0c3a2ac71d2\"}, :properties {:enter {:x {:scale \"x\", :field \"data.x\"}, :y {:scale \"y\", :field \"data.y\"}, :interpolate {:value \"step-before\"}, :fill {:value \"steelblue\"}, :fillOpacity {:value 0.4}, :stroke {:value \"steelblue\"}, :strokeWidth {:value 2}, :strokeOpacity {:value 1}}}}], :scales [{:name \"x\", :type \"linear\", :range \"width\", :zero false, :domain {:data \"5102eb18-bd99-4293-8b23-c0c3a2ac71d2\", :field \"data.x\"}} {:name \"y\", :type \"linear\", :range \"height\", :nice true, :zero false, :domain {:data \"5102eb18-bd99-4293-8b23-c0c3a2ac71d2\", :field \"data.y\"}}], :axes [{:type \"x\", :scale \"x\"} {:type \"y\", :scale \"y\"}]}}"}
+;;; {"type":"vega","content":{"width":400,"height":247.2187957763672,"padding":{"top":10,"left":55,"bottom":40,"right":10},"data":[{"name":"f9d04e4e-5635-4b2f-9aeb-038d71768d9f","values":[{"x":0.0,"y":0},{"x":0.010000000000000002,"y":0.5446},{"x":0.020000000000000004,"y":0.0},{"x":0.030000000000000006,"y":0.0},{"x":0.04000000000000001,"y":0.0},{"x":0.05000000000000001,"y":0.0},{"x":0.06000000000000001,"y":0.0},{"x":0.07,"y":0.0},{"x":0.08000000000000002,"y":0.0},{"x":0.09000000000000002,"y":0.0},{"x":0.10000000000000003,"y":0.0},{"x":0.11000000000000004,"y":0.0},{"x":0.12000000000000005,"y":0.0},{"x":0.13000000000000006,"y":0.0},{"x":0.14000000000000007,"y":0.0},{"x":0.15000000000000008,"y":0.0},{"x":0.1600000000000001,"y":0.0},{"x":0.1700000000000001,"y":0.0},{"x":0.1800000000000001,"y":0.0},{"x":0.1900000000000001,"y":0.0},{"x":0.20000000000000012,"y":0.0},{"x":0.21000000000000013,"y":0.0},{"x":0.22000000000000014,"y":0.0},{"x":0.23000000000000015,"y":0.0},{"x":0.24000000000000016,"y":0.0},{"x":0.25000000000000017,"y":0.0},{"x":0.2600000000000002,"y":0.0},{"x":0.2700000000000002,"y":0.0},{"x":0.2800000000000002,"y":0.0},{"x":0.2900000000000002,"y":0.0},{"x":0.3000000000000002,"y":0.0},{"x":0.3100000000000002,"y":0.0},{"x":0.32000000000000023,"y":0.0},{"x":0.33000000000000024,"y":0.0},{"x":0.34000000000000025,"y":0.0},{"x":0.35000000000000026,"y":0.0},{"x":0.36000000000000026,"y":0.0},{"x":0.3700000000000003,"y":0.0},{"x":0.3800000000000003,"y":0.0},{"x":0.3900000000000003,"y":0.0},{"x":0.4000000000000003,"y":0.0},{"x":0.4100000000000003,"y":0.0},{"x":0.4200000000000003,"y":0.0},{"x":0.4300000000000003,"y":0.0},{"x":0.44000000000000034,"y":0.0},{"x":0.45000000000000034,"y":0.0},{"x":0.46000000000000035,"y":0.0},{"x":0.47000000000000036,"y":0.0},{"x":0.48000000000000037,"y":0.0},{"x":0.4900000000000004,"y":0.0},{"x":0.5000000000000003,"y":0.0},{"x":0.5100000000000003,"y":0.0},{"x":0.5200000000000004,"y":0.0},{"x":0.5300000000000004,"y":0.0},{"x":0.5400000000000004,"y":0.0},{"x":0.5500000000000004,"y":0.0},{"x":0.5600000000000004,"y":0.0},{"x":0.5700000000000004,"y":0.0},{"x":0.5800000000000004,"y":0.0},{"x":0.5900000000000004,"y":0.0},{"x":0.6000000000000004,"y":0.0},{"x":0.6100000000000004,"y":0.0},{"x":0.6200000000000004,"y":0.0},{"x":0.6300000000000004,"y":0.0},{"x":0.6400000000000005,"y":0.0},{"x":0.6500000000000005,"y":0.0},{"x":0.6600000000000005,"y":0.0},{"x":0.6700000000000005,"y":0.0},{"x":0.6800000000000005,"y":0.0},{"x":0.6900000000000005,"y":0.0},{"x":0.7000000000000005,"y":0.0},{"x":0.7100000000000005,"y":0.0},{"x":0.7200000000000005,"y":0.0},{"x":0.7300000000000005,"y":0.0},{"x":0.7400000000000005,"y":0.0},{"x":0.7500000000000006,"y":0.0},{"x":0.7600000000000006,"y":0.0},{"x":0.7700000000000006,"y":0.0},{"x":0.7800000000000006,"y":0.0},{"x":0.7900000000000006,"y":0.0},{"x":0.8000000000000006,"y":0.0},{"x":0.8100000000000006,"y":0.0},{"x":0.8200000000000006,"y":0.0},{"x":0.8300000000000006,"y":0.0},{"x":0.8400000000000006,"y":0.0},{"x":0.8500000000000006,"y":0.0},{"x":0.8600000000000007,"y":0.0},{"x":0.8700000000000007,"y":0.0},{"x":0.8800000000000007,"y":0.0},{"x":0.8900000000000007,"y":0.0},{"x":0.9000000000000007,"y":0.0},{"x":0.9100000000000007,"y":0.0},{"x":0.9200000000000007,"y":0.0},{"x":0.9300000000000007,"y":0.0},{"x":0.9400000000000007,"y":0.0},{"x":0.9500000000000007,"y":0.0},{"x":0.9600000000000007,"y":0.0},{"x":0.9700000000000008,"y":0.0},{"x":0.9800000000000008,"y":0.0},{"x":0.9900000000000008,"y":0.0},{"x":1.0000000000000007,"y":0.4554},{"x":1.0100000000000007,"y":0}]}],"marks":[{"type":"line","from":{"data":"f9d04e4e-5635-4b2f-9aeb-038d71768d9f"},"properties":{"enter":{"x":{"scale":"x","field":"data.x"},"y":{"scale":"y","field":"data.y"},"interpolate":{"value":"step-before"},"fill":{"value":"steelblue"},"fillOpacity":{"value":0.4},"stroke":{"value":"steelblue"},"strokeWidth":{"value":2},"strokeOpacity":{"value":1}}}}],"scales":[{"name":"x","type":"linear","range":"width","zero":false,"domain":{"data":"f9d04e4e-5635-4b2f-9aeb-038d71768d9f","field":"data.x"}},{"name":"y","type":"linear","range":"height","nice":true,"zero":false,"domain":{"data":"f9d04e4e-5635-4b2f-9aeb-038d71768d9f","field":"data.y"}}],"axes":[{"type":"x","scale":"x"},{"type":"y","scale":"y"}]},"value":"#gorilla_repl.vega.VegaView{:content {:width 400, :height 247.2188, :padding {:top 10, :left 55, :bottom 40, :right 10}, :data [{:name \"f9d04e4e-5635-4b2f-9aeb-038d71768d9f\", :values ({:x 0.0, :y 0} {:x 0.010000000000000002, :y 0.5446} {:x 0.020000000000000004, :y 0.0} {:x 0.030000000000000006, :y 0.0} {:x 0.04000000000000001, :y 0.0} {:x 0.05000000000000001, :y 0.0} {:x 0.06000000000000001, :y 0.0} {:x 0.07, :y 0.0} {:x 0.08000000000000002, :y 0.0} {:x 0.09000000000000002, :y 0.0} {:x 0.10000000000000003, :y 0.0} {:x 0.11000000000000004, :y 0.0} {:x 0.12000000000000005, :y 0.0} {:x 0.13000000000000006, :y 0.0} {:x 0.14000000000000007, :y 0.0} {:x 0.15000000000000008, :y 0.0} {:x 0.1600000000000001, :y 0.0} {:x 0.1700000000000001, :y 0.0} {:x 0.1800000000000001, :y 0.0} {:x 0.1900000000000001, :y 0.0} {:x 0.20000000000000012, :y 0.0} {:x 0.21000000000000013, :y 0.0} {:x 0.22000000000000014, :y 0.0} {:x 0.23000000000000015, :y 0.0} {:x 0.24000000000000016, :y 0.0} {:x 0.25000000000000017, :y 0.0} {:x 0.2600000000000002, :y 0.0} {:x 0.2700000000000002, :y 0.0} {:x 0.2800000000000002, :y 0.0} {:x 0.2900000000000002, :y 0.0} {:x 0.3000000000000002, :y 0.0} {:x 0.3100000000000002, :y 0.0} {:x 0.32000000000000023, :y 0.0} {:x 0.33000000000000024, :y 0.0} {:x 0.34000000000000025, :y 0.0} {:x 0.35000000000000026, :y 0.0} {:x 0.36000000000000026, :y 0.0} {:x 0.3700000000000003, :y 0.0} {:x 0.3800000000000003, :y 0.0} {:x 0.3900000000000003, :y 0.0} {:x 0.4000000000000003, :y 0.0} {:x 0.4100000000000003, :y 0.0} {:x 0.4200000000000003, :y 0.0} {:x 0.4300000000000003, :y 0.0} {:x 0.44000000000000034, :y 0.0} {:x 0.45000000000000034, :y 0.0} {:x 0.46000000000000035, :y 0.0} {:x 0.47000000000000036, :y 0.0} {:x 0.48000000000000037, :y 0.0} {:x 0.4900000000000004, :y 0.0} {:x 0.5000000000000003, :y 0.0} {:x 0.5100000000000003, :y 0.0} {:x 0.5200000000000004, :y 0.0} {:x 0.5300000000000004, :y 0.0} {:x 0.5400000000000004, :y 0.0} {:x 0.5500000000000004, :y 0.0} {:x 0.5600000000000004, :y 0.0} {:x 0.5700000000000004, :y 0.0} {:x 0.5800000000000004, :y 0.0} {:x 0.5900000000000004, :y 0.0} {:x 0.6000000000000004, :y 0.0} {:x 0.6100000000000004, :y 0.0} {:x 0.6200000000000004, :y 0.0} {:x 0.6300000000000004, :y 0.0} {:x 0.6400000000000005, :y 0.0} {:x 0.6500000000000005, :y 0.0} {:x 0.6600000000000005, :y 0.0} {:x 0.6700000000000005, :y 0.0} {:x 0.6800000000000005, :y 0.0} {:x 0.6900000000000005, :y 0.0} {:x 0.7000000000000005, :y 0.0} {:x 0.7100000000000005, :y 0.0} {:x 0.7200000000000005, :y 0.0} {:x 0.7300000000000005, :y 0.0} {:x 0.7400000000000005, :y 0.0} {:x 0.7500000000000006, :y 0.0} {:x 0.7600000000000006, :y 0.0} {:x 0.7700000000000006, :y 0.0} {:x 0.7800000000000006, :y 0.0} {:x 0.7900000000000006, :y 0.0} {:x 0.8000000000000006, :y 0.0} {:x 0.8100000000000006, :y 0.0} {:x 0.8200000000000006, :y 0.0} {:x 0.8300000000000006, :y 0.0} {:x 0.8400000000000006, :y 0.0} {:x 0.8500000000000006, :y 0.0} {:x 0.8600000000000007, :y 0.0} {:x 0.8700000000000007, :y 0.0} {:x 0.8800000000000007, :y 0.0} {:x 0.8900000000000007, :y 0.0} {:x 0.9000000000000007, :y 0.0} {:x 0.9100000000000007, :y 0.0} {:x 0.9200000000000007, :y 0.0} {:x 0.9300000000000007, :y 0.0} {:x 0.9400000000000007, :y 0.0} {:x 0.9500000000000007, :y 0.0} {:x 0.9600000000000007, :y 0.0} {:x 0.9700000000000008, :y 0.0} {:x 0.9800000000000008, :y 0.0} {:x 0.9900000000000008, :y 0.0} {:x 1.0000000000000007, :y 0.4554} {:x 1.0100000000000007, :y 0})}], :marks [{:type \"line\", :from {:data \"f9d04e4e-5635-4b2f-9aeb-038d71768d9f\"}, :properties {:enter {:x {:scale \"x\", :field \"data.x\"}, :y {:scale \"y\", :field \"data.y\"}, :interpolate {:value \"step-before\"}, :fill {:value \"steelblue\"}, :fillOpacity {:value 0.4}, :stroke {:value \"steelblue\"}, :strokeWidth {:value 2}, :strokeOpacity {:value 1}}}}], :scales [{:name \"x\", :type \"linear\", :range \"width\", :zero false, :domain {:data \"f9d04e4e-5635-4b2f-9aeb-038d71768d9f\", :field \"data.x\"}} {:name \"y\", :type \"linear\", :range \"height\", :nice true, :zero false, :domain {:data \"f9d04e4e-5635-4b2f-9aeb-038d71768d9f\", :field \"data.y\"}}], :axes [{:type \"x\", :scale \"x\"} {:type \"y\", :scale \"y\"}]}}"}
 ;; <=
 
 ;; **
@@ -261,7 +260,7 @@
     (> theta 0.7)))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world-3/many-flips</span>","value":"#'hello-world-3/many-flips"}
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/many-flips</span>","value":"#'hello-world/many-flips"}
 ;; <=
 
 ;; **
@@ -277,7 +276,7 @@
               #(sample* (many-flip-posterior [true false false true]))))
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-long'>805</span>","value":"805"}],"value":"[false 805]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-long'>195</span>","value":"195"}],"value":"[true 195]"}],"value":"{false 805, true 195}"}
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-long'>785</span>","value":"785"}],"value":"[false 785]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-long'>215</span>","value":"215"}],"value":"[true 215]"}],"value":"{false 785, true 215}"}
 ;; <=
 
 ;; **
@@ -287,30 +286,116 @@
 ;; **
 ;;; ## Advanced usage (not necessary for exercises)
 ;;; 
-;;; If you are familiar with sampling techniques both in general and in Anglican you may directly interact with the sampler output that is hidden behing `conditional` syntactic sugar, bearing in mind that some samplers return _weighted samples_ which should be accounted for in subsequent use and some will return samples with weight `-Infinity` indicating that not all constraints have been satisfied yet; `conditional` does this and more under the covers
+;;; If you are familiar with sampling techniques both in general and in Anglican you may directly interact with the sampler output that is hidden behind the `conditional` function. Bearing in mind that some samplers return _weighted samples_ which should be accounted for in subsequent use and some will return samples with weight `-Infinity` indicating that not all constraints have been satisfied yet; `conditional` does this and more under the covers
 ;;; 
 ;; **
 
 ;; @@
-(def one-flip-sample
-  (->> (doquery :lmh one-flip [true])
-       (filter 
-         #(> (:log-weight %)
-             Double/NEGATIVE_INFINITY))
-       (map get-predicts)
-       (map :theta-gt-pt07)))
-(frequencies (take 10000 one-flip-sample))
+(def one-flip-samples
+  (doquery :importance one-flip [true]))
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/one-flip-samples</span>","value":"#'hello-world/one-flip-samples"}
+;; <=
 
 ;; **
-;;; Otherwise you may use helper functions that collate sampler output in a way that properly uses the weights (for instance returned by the `:smc` sampler,  retaining statistical effeciency but requiring you to use the helper functions in `anglican.stat`
+;;; This command defines an infinite lazy sequence of samples. Each sample is a hashmap with three entries
 ;; **
 
 ;; @@
-(->> (doquery :smc one-flip [true] 
-              :number-of-particles 100)
-     (take 10000)
-     (collect-by :theta-gt-pt07)
-     (stat/empirical-distribution))
+(first one-flip-samples)
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:log-weight</span>","value":":log-weight"},{"type":"html","content":"<span class='clj-double'>-1.732447605679859</span>","value":"-1.732447605679859"}],"value":"[:log-weight -1.732447605679859]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:result</span>","value":":result"},{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"}],"value":"[:result false]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:predicts</span>","value":":predicts"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[],"value":"[]"}],"value":"[:predicts []]"}],"value":"{:log-weight -1.732447605679859, :result false, :predicts []}"}
+;; <=
+
+;; **
+;;; The `:result` entry contains the return value for each program execution. The `:log-weight` entry contains the corresponding log probability. We will return to the `:predict` value in a moment. 
+;;; 
+;;; You can now get a posterior estimate, by extracting the `:result` value from each sample, e.g.	
+;; **
 
 ;; @@
+(frequencies
+  (map :result
+       (take 1000 one-flip-samples)))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-long'>662</span>","value":"662"}],"value":"[false 662]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-long'>338</span>","value":"338"}],"value":"[true 338]"}],"value":"{false 662, true 338}"}
+;; <=
+
+;; **
+;;; You can also use the `collect-by` helper function to calculate the cumulative log weight associated with each unique return value in a sequence of samples
+;; **
+
+;; @@
+(require '[anglican.inference :refer [collect-by]])
+
+(collect-by :result 
+            (take 10000 one-flip-samples))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-double'>-1.0527953790953903</span>","value":"-1.0527953790953903"}],"value":"[false -1.0527953790953903]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-double'>-1.2902037253292633</span>","value":"-1.2902037253292633"}],"value":"[true -1.2902037253292633]"}],"value":"{false -1.0527953790953903, true -1.2902037253292633}"}
+;; <=
+
+;; **
+;;; The output of `collect-by` is a map `{value log-weight}`, which can be post-processed using functions in `anglican.stat`. For example we use `empirical-distribution` to normalize log weights into probabilities that sum to 1.0:
+;; **
+
+;; @@
+(require '[anglican.stat :refer [empirical-distribution]])
+
+(empirical-distribution
+  (collect-by :result 
+              (take 10000 one-flip-samples)))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"},{"type":"html","content":"<span class='clj-double'>0.5590748784403028</span>","value":"0.5590748784403028"}],"value":"[false 0.5590748784403028]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-unkown'>true</span>","value":"true"},{"type":"html","content":"<span class='clj-double'>0.4409251215596972</span>","value":"0.4409251215596972"}],"value":"[true 0.4409251215596972]"}],"value":"{false 0.5590748784403028, true 0.4409251215596972}"}
+;; <=
+
+;; **
+;;; Finally, you can use the `(predict ...)` special form to define additional outputs in the program. Unlike the `:result` value, these outputs do not have to be define at the end of the program. For example:
+;; **
+
+;; @@
+(defquery many-flips [y-values]
+  (let [theta (sample (beta 5 3))
+        outcome-dist (flip theta)]
+    (predict :theta theta)
+    (map (fn [y] 
+           (observe outcome-dist y)) 
+         y-values)
+    (> theta 0.7)))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;hello-world/many-flips</span>","value":"#'hello-world/many-flips"}
+;; <=
+
+;; **
+;;; You will now see an entry under `:predicts` in the returned samples
+;; **
+
+;; @@
+(first 
+  (doquery :importance many-flips 
+           [[true true true]]))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:log-weight</span>","value":":log-weight"},{"type":"html","content":"<span class='clj-double'>-1.9289274005111863</span>","value":"-1.9289274005111863"}],"value":"[:log-weight -1.9289274005111863]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:result</span>","value":":result"},{"type":"html","content":"<span class='clj-unkown'>false</span>","value":"false"}],"value":"[:result false]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:predicts</span>","value":":predicts"},{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"list-like","open":"<span class='clj-vector'>[</span>","close":"<span class='clj-vector'>]</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:theta</span>","value":":theta"},{"type":"html","content":"<span class='clj-double'>0.5257256395327461</span>","value":"0.5257256395327461"}],"value":"[:theta 0.5257256395327461]"}],"value":"[[:theta 0.5257256395327461]]"}],"value":"[:predicts [[:theta 0.5257256395327461]]]"}],"value":"{:log-weight -1.9289274005111863, :result false, :predicts [[:theta 0.5257256395327461]]}"}
+;; <=
+
+;; **
+;;; Anglican provides a function called `get-predicts`, in `anglican.state`, which turns the predicts as a hashmap
+;; **
+
+;; @@
+(require '[anglican.state :refer [get-predicts]])
+
+(get-predicts
+  (first 
+    (doquery :importance 
+             many-flips [[true true true]])))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:theta</span>","value":":theta"},{"type":"html","content":"<span class='clj-double'>0.7972006043653663</span>","value":"0.7972006043653663"}],"value":"[:theta 0.7972006043653663]"}],"value":"{:theta 0.7972006043653663}"}
+;; <=
