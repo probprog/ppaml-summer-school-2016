@@ -1,4 +1,4 @@
-(ns utils.captcha
+(ns exercises.captcha
   (:require [clojure.string :as str]
             [clojure.core.matrix :as m]
             [clojure.java.io :as io])
@@ -69,16 +69,16 @@
   "Approximate Bayesian Computation distribution constructor. Reduces dimensions using Random projections and then calculates likelihood under diagonal multivariate Gaussian under the rendered image."
   [rendered-image abc-sigma]
   [dist (normal 0 abc-sigma)]
-  (sample [this] rendered-image)
-  (observe [this baseline-image]
-           (reduce + (map #(observe dist (- %1 %2))
+  (sample* [this] rendered-image)
+  (observe* [this baseline-image]
+           (reduce + (map #(observe* dist (- %1 %2))
                           (reduce-dim baseline-image)
                           (reduce-dim rendered-image)))))
 
 (defdist overlap-abc-dist
   [avg-width penalty] []
-  (sample [this] nil)
-  (observe [this ordered-xs]
+  (sample* [this] nil)
+  (observe* [this ordered-xs]
            (reduce + (map #(let [diff (- (second %) (first %))]
                              (if (< diff avg-width)
                                (* penalty (log (/ diff avg-width)))
@@ -118,12 +118,12 @@
           rendered-image (render x-offsets y-offsets letters false :mode OxCaptcha/RELATIVE)]
 
       ;; ABC-style observe
-      (predict :letters letters)
-      (predict :rendered-image rendered-image))))
+      {:letters letters
+       :rendered-image rendered-image})))
 
 (defn generate-test-samples [letter-dict num-observes folder]
   (let [prior-dist (conditional captcha-with-offsets :lmh)
-        test-samples (repeatedly num-observes  #(sample (prior-dist letter-dict)))
+        test-samples (repeatedly num-observes  #(sample* (prior-dist letter-dict)))
         letters (map :letters test-samples)
         observes (map :rendered-image test-samples)]
     (doall (map (fn [i]
