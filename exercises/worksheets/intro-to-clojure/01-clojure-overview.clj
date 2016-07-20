@@ -92,6 +92,48 @@
 ;; <=
 
 ;; **
+;;; When using a new function, it can be helpful to view the Clojure documentation and source code. We do this using the `doc` and `source` commands, defined in the "`clojure.repl`" namespace:
+;; **
+
+;; @@
+;; This returns the documentation for the `+` operator:
+(clojure.repl/doc +)
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.core/+
+;;; ([] [x] [x y] [x y &amp; more])
+;;;   Returns the sum of nums. (+) returns 0. Does not auto-promote
+;;;   longs, will throw on overflow. See also: +&#x27;
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+;; and this returns the source code:
+(clojure.repl/source +)
+;; @@
+;; ->
+;;; (defn +
+;;;   &quot;Returns the sum of nums. (+) returns 0. Does not auto-promote
+;;;   longs, will throw on overflow. See also: +&#x27;&quot;
+;;;   {:inline (nary-inline &#x27;add &#x27;unchecked_add)
+;;;    :inline-arities &gt;1?
+;;;    :added &quot;1.2&quot;}
+;;;   ([] 0)
+;;;   ([x] (cast Number x))
+;;;   ([x y] (. clojure.lang.Numbers (add x y)))
+;;;   ([x y &amp; more]
+;;;      (reduce1 + (+ x y) more)))
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
 ;;; Clojure is dynamically _typed_ and performs type conversion behind the scenes, almost always nicely.  It has types for floating-point numbers, integers, fractions, and booleans.  Clojure also has matrix types, but we won't need them for these exercises, though Anglican supports them (e.g. [Kalman smoother](http://www.robots.ox.ac.uk/~fwood/anglican/examples/viewer/?worksheet=kalman).)
 ;;; 
 ;;; Comparison operators `<`, `>`, `=`, `<=`, `>=` behave as one would expect, and can be used within an `if` statement. The `if` statement takes the form
@@ -232,6 +274,20 @@
 ;;; {"type":"html","content":"<span class='clj-long'>32</span>","value":"32"}
 ;; <=
 
+;; @@
+;; and the `when` block, which compiles into an `if` statement followed by a do block. The `if` evaluates the first argument, and then `do`s the rest if true:
+
+;; This is expanded to read "(if 1 (do (println 2) 3)) 
+(when 1 (println 2) 3)
+;; @@
+;; ->
+;;; 2
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
 ;; **
 ;;; ## Functions
 ;;; 
@@ -287,6 +343,52 @@
 ;; @@
 ;; =>
 ;;; {"type":"html","content":"<span class='clj-long'>16</span>","value":"16"}
+;; <=
+
+;; **
+;;; ## Macros
+;;; 
+;;; Sometimes it is preferable, instead of writing a function to operate on some inputs in a predefined way, to instead write a *macro* which actually transforms the code that is inputted to it. We can use the `macroexpand` function to explicitly see what macros are doing. To do this, we must pass the macro and it's arguments to `macroexpand` as a `quote`, by using the quote operator "`'`". A good example is the `when` block we defined earlier, which is actually a macro:
+;; **
+
+;; @@
+;; If you try this without the quote "'" it will evaulate the when block before trying to macroexpand, and then throw an error!
+(macroexpand '(when 1 2 3))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>if</span>","value":"if"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>do</span>","value":"do"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(do 2 3)"}],"value":"(if 1 (do 2 3))"}
+;; <=
+
+;; **
+;;; We see that `when` literally extracts the first argument and passes it to an `if` statement, and pass the remaining arguments to a `do` block. One of the interesting things about Clojure is that a large chunk of the language is actually defined in terms of macros which perform simplifying code transformations to save effort. An example is the `thread-first` macro: "`->`" which recursively inserts each expression as the first argument of the next expression:
+;; **
+
+;; @@
+(let [c 5]
+
+;; actually evaluates (- (\ (+ c 3) 2) 1)
+(-> c (+ 3) (/ 2) (- 1)))
+
+;; We can see this by using macroexpand (don't forget to quote!)
+(let [c 5]
+(macroexpand '(-> c (+ 3) (/ 2) (- 1))))
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>-</span>","value":"-"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>/</span>","value":"/"},{"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>+</span>","value":"+"},{"type":"html","content":"<span class='clj-symbol'>c</span>","value":"c"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(+ c 3)"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"}],"value":"(/ (+ c 3) 2)"},{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"}],"value":"(- (/ (+ c 3) 2) 1)"}
+;; <=
+
+;; @@
+;; There is also a thread-last macro, "->>", which inserts the expression as the last argument of the next expression:
+(let [c 5]
+(println "Using ->> gives: " (macroexpand '(->> c (+ 3) (/ 2) (- 1))))
+(->> c (+ 3) (/ 2) (- 1)))
+;; @@
+;; ->
+;;; Using -&gt;&gt; gives:  (- 1 (/ 2 (+ 3 c)))
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-ratio'>3/4</span>","value":"3/4"}
 ;; <=
 
 ;; **
@@ -790,7 +892,7 @@
 ;; **
 ;;; The final essential Clojure construct we will want for the exercises is `loop ... recur`. This allows us to easily write looping code.
 ;;; 
-;;; `loop` specifies initial values for a set of names (similar to a `let`-block) and then `recur` passes new values in when running the next loop iteration. This is best demonstrated by example. There are some examples http://clojuredocs.org/clojure.core/loop, and below:
+;;; `loop` specifies initial values for a set of names (similar to a `let`-block) and then `recur` passes new values in when running the next loop iteration. Another way to put this is that `recur` takes the same arguments as the original loop, and effectively calls the loop again but this time starting with the updated values. It is important to ensure that at least one of the parameters is converging towards a value which will trigger the end of the loop (usually via an `if` statement). This is best demonstrated by example. There are some examples http://clojuredocs.org/clojure.core/loop, and below:
 ;; **
 
 ;; @@
