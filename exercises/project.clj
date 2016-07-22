@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :plugins [[lein-gorilla "0.3.6"]]
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [anglican "1.0.0-SNAPSHOT"]
+                 [anglican "1.0.0"]
                  [org.nfrac/cljbox2d.testbed "0.5.0"]
                  [org.nfrac/cljbox2d "0.5.0"]
                  [org.clojure/data.priority-map "0.0.7"]
