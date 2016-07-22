@@ -150,7 +150,8 @@
 ;; @@
 
 ;; @@
-(println "Expected value of measured quantity:" (stat/mean (map :mu scientist-samples)))
+(println "Expected value of measured quantity:" 
+         (mean (map :mu scientist-samples)))
 
 (plot/histogram (map :mu scientist-samples)
                 :normalize :probability
@@ -158,7 +159,7 @@
 ;; @@
 
 ;; @@
-(def noise-estimate (stat/mean (map :sigmas scientist-samples)))
+(def noise-estimate (mean (map :sigmas scientist-samples)))
 
 (plot/bar-chart (range 1 8) noise-estimate)
 ;; @@

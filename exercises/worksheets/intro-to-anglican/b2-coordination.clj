@@ -74,13 +74,13 @@
               #(sample* ((conditional meet-by-chance)))))
 
 (println "p(Amy at Pub) ="
-  (stat/mean (map #(if (= (:amy %) :pub) 1.0 0.0)
-                  samples)))
-               
+         (mean (map #(if (= (:amy %) :pub) 1.0 0.0)
+                    samples)))
+
 
 (println "p(Amy meets Bob) ="
-  (stat/mean (map #(if (:meet %) 1.0 0.0) 
-				  samples)))
+         (mean (map #(if (:meet %) 1.0 0.0) 
+                    samples)))
 ;; @@
 
 ;; **

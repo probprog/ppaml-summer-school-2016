@@ -50,7 +50,7 @@
                      (= value :pub))))
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-unkown'>#multifn[print-method 0x6a353530]</span>","value":"#multifn[print-method 0x6a353530]"}
+;;; {"type":"html","content":"<span class='clj-unkown'>#multifn[print-method 0x13e7f685]</span>","value":"#multifn[print-method 0x13e7f685]"}
 ;; <=
 
 ;; **
@@ -61,7 +61,7 @@
 (repeatedly 10 #(sample* (location 0.6)))
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"}],"value":"(:pub :starbucks :starbucks :starbucks :starbucks :starbucks :pub :pub :starbucks :pub)"}
+;;; {"type":"list-like","open":"<span class='clj-lazy-seq'>(</span>","close":"<span class='clj-lazy-seq'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"}],"value":"(:pub :pub :pub :pub :pub :pub :pub :starbucks :pub :pub)"}
 ;; <=
 
 ;; **
@@ -83,17 +83,17 @@
               #(sample* ((conditional meet-by-chance)))))
 
 (println "p(Amy at Pub) ="
-  (stat/mean (map #(if (= (:amy %) :pub) 1.0 0.0)
-                  samples)))
-               
+         (mean (map #(if (= (:amy %) :pub) 1.0 0.0)
+                    samples)))
+
 
 (println "p(Amy meets Bob) ="
-  (stat/mean (map #(if (:meet %) 1.0 0.0) 
-				  samples)))
+         (mean (map #(if (:meet %) 1.0 0.0) 
+                    samples)))
 ;; @@
 ;; ->
-;;; p(Amy at Pub) = 0.599
-;;; p(Amy meets Bob) = 0.552
+;;; p(Amy at Pub) = 0.5740000000000001
+;;; p(Amy meets Bob) = 0.527
 ;;; 
 ;; <-
 ;; =>
@@ -130,7 +130,7 @@
 (frequencies samples)
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-long'>684</span>","value":"684"}],"value":"[:pub 684]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-long'>316</span>","value":"316"}],"value":"[:starbucks 316]"}],"value":"{:pub 684, :starbucks 316}"}
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-long'>643</span>","value":"643"}],"value":"[:pub 643]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-long'>357</span>","value":"357"}],"value":"[:starbucks 357]"}],"value":"{:pub 643, :starbucks 357}"}
 ;; <=
 
 ;; **
@@ -156,7 +156,7 @@
 (frequencies samples)
 ;; @@
 ;; =>
-;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-long'>674</span>","value":"674"}],"value":"[:pub 674]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-long'>326</span>","value":"326"}],"value":"[:starbucks 326]"}],"value":"{:pub 674, :starbucks 326}"}
+;;; {"type":"list-like","open":"<span class='clj-map'>{</span>","close":"<span class='clj-map'>}</span>","separator":", ","items":[{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:starbucks</span>","value":":starbucks"},{"type":"html","content":"<span class='clj-long'>327</span>","value":"327"}],"value":"[:starbucks 327]"},{"type":"list-like","open":"","close":"","separator":" ","items":[{"type":"html","content":"<span class='clj-keyword'>:pub</span>","value":":pub"},{"type":"html","content":"<span class='clj-long'>673</span>","value":"673"}],"value":"[:pub 673]"}],"value":"{:starbucks 327, :pub 673}"}
 ;; <=
 
 ;; **
@@ -246,8 +246,8 @@
 ;; @@
 ;; ->
 ;;; recursion depth:  0
-;;; p(Amy at pub):  0.681
-;;; p(Bob at pub):  0.589
+;;; p(Amy at pub):  0.702
+;;; p(Bob at pub):  0.586
 ;;; 
 ;; <-
 ;; =>
@@ -265,8 +265,8 @@
 ;; @@
 ;; ->
 ;;; recursion depth:  1
-;;; p(Amy at pub):  0.693
-;;; p(Bob at pub):  0.78
+;;; p(Amy at pub):  0.721
+;;; p(Bob at pub):  0.741
 ;;; 
 ;; <-
 ;; =>
@@ -287,11 +287,11 @@
 ;; @@
 ;; ->
 ;;; recursion depth:  2
-;;; p(Amy at pub):  0.838
-;;; p(Bob at pub):  0.868
+;;; p(Amy at pub):  0.842
+;;; p(Bob at pub):  0.878
 ;;; recursion depth:  3
-;;; p(Amy at pub):  0.916
-;;; p(Bob at pub):  0.938
+;;; p(Amy at pub):  0.914
+;;; p(Bob at pub):  0.954
 ;;; 
 ;; <-
 ;; =>
@@ -341,29 +341,6 @@
 ;;; {"type":"html","content":"<span class='clj-var'>#&#x27;coordination-game/simulate-true-bob</span>","value":"#'coordination-game/simulate-true-bob"}
 ;; <=
 
-;; @@
-(declare amy-true-model amy-false-model bob-confused)
-
-(with-primitive-procedures [location]
-  (defm simulate-true-amy [depth]
-    ;;; Amy is trying to avoid Bob (Amy's actual preference)
-	;;; *** YOUR CODE HERE ***
-    :pub)
-
-  (defm simulate-false-amy [depth]
-    ;;; Amy is trying to meet Bob (Bob's incorrect belief)
-	;;; *** YOUR CODE HERE ***
-    :pub)
-  
-  (defm simulate-true-bob [depth]
-    ;;; Bob is trying to meet Amy (Amy and Bob both know this)
-	;;; *** YOUR CODE HERE ***
-    :pub))
-;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-var'>#&#x27;coordination-game/simulate-true-bob</span>","value":"#'coordination-game/simulate-true-bob"}
-;; <=
-
 ;; **
 ;;; Here is a similar helper function as before, to estimate the probability of each of them selecting the pub:
 ;; **
@@ -398,17 +375,17 @@
 ;; @@
 ;; ->
 ;;; recursion depth:  0
-;;; p(Amy at pub):  1.0
-;;; p(Bob at pub):  1.0
+;;; p(Amy at pub):  0.497
+;;; p(Bob at pub):  0.598
 ;;; recursion depth:  1
-;;; p(Amy at pub):  1.0
-;;; p(Bob at pub):  1.0
+;;; p(Amy at pub):  0.497
+;;; p(Bob at pub):  0.754
 ;;; recursion depth:  2
-;;; p(Amy at pub):  1.0
-;;; p(Bob at pub):  1.0
+;;; p(Amy at pub):  0.307
+;;; p(Bob at pub):  0.891
 ;;; recursion depth:  3
-;;; p(Amy at pub):  1.0
-;;; p(Bob at pub):  1.0
+;;; p(Amy at pub):  0.143
+;;; p(Bob at pub):  0.947
 ;;; 
 ;; <-
 ;; =>

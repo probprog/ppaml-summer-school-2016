@@ -26,6 +26,12 @@
 ;;; Output will appear just below the cell; in this case we expect `nil`.
 ;; **
 
+;; @@
+(ns hello-world
+  (:require [gorilla-plot.core :as plot])
+  (:use [anglican core runtime emit stat]))
+;; @@
+
 ;; **
 ;;; ## Anglican overview
 ;;; 
@@ -56,12 +62,6 @@
 ;;; 
 ;;; Below are some example distribution primitives; these are sufficient to solve the exercises.  A full list of built-in primitives can be found [here](http://www.robots.ox.ac.uk/~fwood/anglican/language/index.html).
 ;; **
-
-;; @@
-(ns hello-world
-  (:require [gorilla-plot.core :as plot])
-  (:use [anglican core runtime emit stat]))
-;; @@
 
 ;; @@
 ;; Draw from a normal distribution with mean 1 and standard deviation 2:
@@ -133,173 +133,119 @@
 ;; **
 ;;; Take a moment to make sure that code block makes sense! `defquery` looks a lot like a function definition, except the contents of the `defquery` are actually Anglican code, which is then _compiled_ into a computable representation of the posterior (think sampler).
 ;;; 
-;;; The query is named `one-flip`, and it takes a single argument `y`, which is the observed value.
+;;; - The query is named `one-flip`, and it takes a single argument `y`, which is the observed value.
 ;;; 
-;;; The `let` block defines `theta` as a random sample from the distribution `(beta 5 3)`.
+;;; - The `let` block defines `theta` as a random sample from the distribution `(beta 5 3)`.
 ;;; 
-;;; The `observe` statement asserts that we see `y` as data generated from `(flip theta)`.
+;;; - The `observe` statement asserts that we see `y` as data generated from `(flip theta)`.
 ;;; 
-;;; The final statement defines the return value for the program, which is equal to the `true/false` value of the expression `(> theta 0.7)`.
+;;; - The final statement defines the return value for the program, which is equal to the `true/false` value of the expression `(> theta 0.7)`.
 ;;; 
 ;;; Together, these four lines define our first Anglican program/query/model.
 ;; **
 
 ;; **
-;;; ### Posterior sampling from queries
+;;; ## Sampling from the posterior
 ;;; 
 ;;; 
-;;; The `conditional` function takes a query and returns a distribution object constructor (think of the returned object as a factory for conditional/parameterized distributions). It takes various optional arguments which are used to specify the algorithm used for posterior sampling. Sensible values for these are provided in all exercises, and all different options are described in the [inference algorithms documentation](http://www.robots.ox.ac.uk/~fwood/anglican/language/index.html).
+;; **
+
+;; **
+;;; The `doquery` command can be used to perform inference on a query with a specified algorithm
+;; **
+
+;; @@
+(def rmh-samples
+  (take 1000
+        (doquery :rmh one-flip [true])))
+;; @@
+
+;; **
+;;; The `doquery` command defines an infinite lazy sequence, of which we grab 1000 samples.  **Important**: Do not try to print out or directly evaluate the output from a `doquery` call – this will try to print out an infinite sequence.
 ;;; 
-;;; The following line defines `one-flip-posterior` as a distribution constructor which will draw posterior samples from the distribution defined by our query above, using the Lightweight Metropolis-Hastings (`:lmh`) algorithm.
+;;; We here use the `:rmh` algorithm to perform inference. Inference algorithms can accept various optional arguments which are used to specify the algorithm used for posterior sampling. Sensible values for these are provided in all exercises, and all different options are described in the [inference algorithms documentation](http://www.robots.ox.ac.uk/~fwood/anglican/language/index.html).
+;; **
+
+;; **
+;;; Each sample returned by `doquery` is a hashmap with three entries
 ;; **
 
 ;; @@
-(def one-flip-posterior (conditional one-flip :lmh))
+(first rmh-samples)
 ;; @@
 
 ;; **
-;;; The object we just created plays the same role as `normal`, `flip`, or other built-in distribution constructors (except one can only `sample` but not `observe` from distributions created using `conditional`).
+;;; The `:result` entry contains the return value for each program execution. The `:log-weight` entry contains the corresponding log probability. The `:predict` key stores the output of `(predict ...)` commands, which we ill get back to later in this workbook. 
 ;;; 
-;;; To actually create the posterior distribution itself, we create a distribution object which takes the query argument `outcome`. 
-;;; 
-;;; This is analogous to how when creating a normal distribution we must specify the mean and standard deviation, e.g. `(normal 0 1)`. Here, we specify whether our one outcome was true or false.
-;; **
-
-;; @@
-(def true-flip-posterior (one-flip-posterior true))
-;; @@
-
-;; **
-;;; Now, we can draw samples just as we would draw samples from a distribution created by calling `(normal 0 1)`. A sample from a conditional distribution defined in this way returns a key-value map, where the keys are the same as those specified in the `predict` statements.
-;;; 
-;;; To index into a hashmap in Clojure, just use the key as a function.
-;; **
-
-;; @@
-;; Draw one sample (returns true or false):
-(sample* true-flip-posterior)
-;; @@
-
-;; **
-;;; Sampling repeatedly from this distribution object characterizes the distribution.
-;;; 
-;;; Here, we're using the clojure builtin `frequencies`, and drawing 1000 samples.
-;; **
-
-;; @@
-(frequencies (repeatedly 
-               1000
-               #(sample* true-flip-posterior)))
-;; @@
-
-;; **
-;;; A rudimentary plotting capability comes as part of [Gorilla REPL](http://gorilla-repl.org/).  Here we use a histogram plot to show the estimated distribution.
-;; **
-
-;; @@
-(plot/histogram 
-  (->> (repeatedly 10000 #(sample* true-flip-posterior))
-       (map (fn [x] (if x 1 0))))
-  :bins 100 :normalize :probability)
-;; @@
-
-;; **
-;;; ## A Second Query: Multiple Observes
-;;; 
-;;; How would we modify this model to return, instead of a one-flip posterior, the posterior distribution given a sequence of flips? That is, we keep the basic model
-;;; 
-;;; $$\begin{align}\theta &\sim \mathrm{Beta}(5,3) \\\\
-;;; y\_i &\sim \mathrm{Bernoulli}(\theta)\end{align}$$
-;;; 
-;;; and ask 
-;;; 
-;;; $$p(\theta>0.7 | x\_i)$$
-;;; 
-;;; for some sequence @@x\_i@@. Now, we let `outcomes`, the argument to our query, be a sequence, and we can use `map` (or `loop` and `recur`) to `observe` all different outcomes.
-;;; 
-;;; Here's one way of writing this:
-;; **
-
-;; @@
-(defquery many-flips [y-values]
-  (let [theta (sample (beta 5 3))
-        outcome-dist (flip theta)]
-    (map (fn [y] 
-           (observe outcome-dist y)) 
-         y-values)
-    (> theta 0.7)))
-;; @@
-
-;; **
-;;; We can use `conditional` to estimate the posterior distribution of @@\theta > 0.7@@ given the sequence `[true, false, false, true]`, just as before (the analytical answer is 0.21).
-;; **
-
-;; @@
-(def many-flip-posterior (conditional many-flips :lmh))
-
-
-(frequencies 
-  (repeatedly 1000 
-              #(sample* (many-flip-posterior [true false false true]))))
-;; @@
-
-;; **
-;;; That's it! Now move onto the exercises. Keep this worksheet open in a separate tab or window, and refer to it for language reference.
-;; **
-
-;; **
-;;; ## Advanced usage (not necessary for exercises)
-;;; 
-;;; If you are familiar with sampling techniques both in general and in Anglican you may directly interact with the sampler output that is hidden behind the `conditional` function. Bearing in mind that some samplers return _weighted samples_ which should be accounted for in subsequent use and some will return samples with weight `-Infinity` indicating that not all constraints have been satisfied yet; `conditional` does this and more under the covers
-;;; 
-;; **
-
-;; @@
-(def one-flip-samples
-  (doquery :importance one-flip [true]))
-;; @@
-
-;; **
-;;; This command defines an infinite lazy sequence of samples. Each sample is a hashmap with three entries
-;; **
-
-;; @@
-(first one-flip-samples)
-;; @@
-
-;; **
-;;; The `:result` entry contains the return value for each program execution. The `:log-weight` entry contains the corresponding log probability. We will return to the `:predict` value in a moment. 
-;;; 
-;;; You can now get a posterior estimate, by extracting the `:result` value from each sample, e.g.	
+;;; Now that you have generated your first set of samples, you can now get a posterior estimate by extracting the `:result` value from each sample, e.g.  
 ;; **
 
 ;; @@
 (frequencies
   (map :result
-       (take 1000 one-flip-samples)))
+       rmh-samples))
 ;; @@
 
 ;; **
-;;; You can also use the `collect-by` helper function to calculate the cumulative log weight associated with each unique return value in a sequence of samples
+;;; here, `frequencies` is a standard Clojure function that counts the number of occurences of each unique element in a sequence. 
+;; **
+
+;; **
+;;; ## Importance Sampling
+;; **
+
+;; **
+;;; Anglican provides different classes of inference methods. MCMC methods, such as `:rmh` return unweighted samples, whereas importance sampling methods, such as `:importance` and `:smc` return weighted samples:
 ;; **
 
 ;; @@
-(require '[anglican.inference :refer [collect-by]])
+(def rmh-samples
+  (take 1000
+	    (doquery :rmh one-flip [true])))
 
-(collect-by :result 
-            (take 10000 one-flip-samples))
+(def importance-samples
+  (take 1000
+	    (doquery :importance one-flip [true])))
+
+(first rmh-samples)
+(first importance-samples)
 ;; @@
 
 ;; **
-;;; The output of `collect-by` is a map `{value log-weight}`, which can be post-processed using functions in `anglican.stat`. For example we use `empirical-distribution` to normalize log weights into probabilities that sum to 1.0:
+;;; If you naively average over weighted samples, you will get incorrect results
 ;; **
 
 ;; @@
-(require '[anglican.stat :refer [empirical-distribution]])
+(frequencies
+  (map :result
+       rmh-samples))
+
+(frequencies
+  (map :result
+       importance-samples))
+;; @@
+
+;; **
+;;; Anglican provides a function known as `collect-results` which summarizes a set of weighted samples
+;; **
+
+;; @@
+(collect-results 
+  (take 10000 importance-samples))
+;; @@
+
+;; **
+;;; The output of `collect-results` is a map `{value log-weight}`, which can be post-processed using functions in `anglican.stat`. For example we use `empirical-distribution` to normalize log weights into probabilities that sum to 1.0:
+;; **
+
+;; @@
+(empirical-distribution
+  (collect-results 
+    rmh-samples))
 
 (empirical-distribution
-  (collect-by :result 
-              (take 10000 one-flip-samples)))
+  (collect-results 
+    importance-samples))
 ;; @@
 
 ;; **
@@ -338,4 +284,181 @@
   (first 
     (doquery :importance 
              many-flips [[true true true]])))
+;; @@
+
+;; **
+;;; ## A Second Query: Multiple Observes
+;;; 
+;;; How would we modify this model to return, instead of a one-flip posterior, the posterior distribution given a sequence of flips? That is, we keep the basic model
+;;; 
+;;; $$\begin{align}\theta &\sim \mathrm{Beta}(5,3) \\\\
+;;; y\_i &\sim \mathrm{Bernoulli}(\theta)\end{align}$$
+;;; 
+;;; and ask 
+;;; 
+;;; $$p(\theta>0.7 | x\_i)$$
+;;; 
+;;; for some sequence @@x\_i@@. Now, we let `outcomes`, the argument to our query, be a sequence, and we can use `map` (or `loop` and `recur`) to `observe` all different outcomes.
+;;; 
+;;; Here's one way of writing this:
+;; **
+
+;; @@
+(defquery many-flips [y-values]
+  (let [theta (sample (beta 5 3))
+        outcome-dist (flip theta)]
+    (map (fn [y] 
+           (observe outcome-dist y)) 
+         y-values)
+    (> theta 0.7)))
+;; @@
+
+;; **
+;;; We can use `doquery` to estimate the posterior distribution of @@\theta > 0.7@@ given the sequence `[true, false, false, true]`, just as before (the analytical answer is 0.21).
+;; **
+
+;; @@
+(def data [true, false, false, true])
+
+(def rmh-samples 
+  (take 1000 (doquery :rmh many-flips [data])))
+
+(frequencies
+  (map :result rmh-samples))
+;; @@
+
+;; **
+;;; ## Visualizing Results
+;; **
+
+;; **
+;;; A rudimentary plotting capability comes as part of [Gorilla REPL](http://gorilla-repl.org/).  Here we use a histogram plot to show the posterior distribution on `theta`.
+;; **
+
+;; **
+;;; 
+;; **
+
+;; @@
+(defquery many-flips [y-values]
+  (let [theta (sample (beta 5 3))
+        outcome-dist (flip theta)]
+    (map (fn [y] 
+           (observe outcome-dist y)) 
+         y-values)
+    theta))
+
+(def rmh-samples 
+  (take 1000 (doquery :rmh many-flips [data])))
+
+(plot/histogram 
+  (map :result rmh-samples)
+  :bins 20 :normalize :probability)
+;; @@
+
+;; **
+;;; That's it! Now move onto the exercises, or take a look at some of the advanced usage examples below. Keep this worksheet open in a separate tab or window, and refer to it for language reference.
+;; **
+
+;; **
+;;; ## Advanced Usage: predict
+;; **
+
+;; **
+;;; Anglican allows you to define additional program outputs using the `predict` command
+;; **
+
+;; @@
+(defquery many-flips [y-values]
+  (let [theta (sample (beta 5 3))
+        outcome-dist (flip theta)]
+    (predict :theta theta)
+    (map (fn [y] 
+           (observe outcome-dist y)) 
+         y-values)
+    (> theta 0.7)))
+;; @@
+
+;; **
+;;; The values associated with `predict` commands are stored in the `:predict`
+;; **
+
+;; @@
+(def rmh-samples 
+  (take 1000 (doquery :rmh many-flips [data])))
+
+(first rmh-samples)
+;; @@
+
+;; **
+;;; You can extract these values using the `get-predicts` function in `anglican.state`
+;; **
+
+;; @@
+(require '[anglican.state :refer [get-predicts]])
+
+(get-predicts (first rmh-samples))
+;; @@
+
+;; **
+;;; Anglican also provides `collect-predicts`, which is the analogue of `collect-results`
+;; **
+
+;; @@
+(empirical-mean
+  (collect-predicts 
+    :theta
+    rmh-samples))
+
+(empirical-std
+  (collect-predicts 
+    :theta
+    rmh-samples))
+;; @@
+
+;; **
+;;; ## Andvanced Usage: conditional
+;;; 
+;;; 
+;;; The `conditional` function takes a query and returns a distribution object constructor (think of the returned object as a factory for conditional/parameterized distributions). 
+;;; 
+;;; The following line defines `one-flip-posterior` as a distribution constructor which will draw posterior samples from the distribution defined by our query above, using the Lightweight Metropolis-Hastings (`:lmh`) algorithm.
+;; **
+
+;; @@
+(require 'anglican.rmh)
+(def one-flip-posterior (conditional many-flips :rmh))
+;; @@
+
+;; **
+;;; The object we just created plays the same role as `normal`, `flip`, or other built-in distribution constructors (except one can only `sample` but not `observe` from distributions created using `conditional`).
+;;; 
+;;; To actually create the posterior distribution itself, we create a distribution object which takes the query argument `outcome`. 
+;;; 
+;;; This is analogous to how when creating a normal distribution we must specify the mean and standard deviation, e.g. `(normal 0 1)`. Here, we specify whether our one outcome was true or false.
+;; **
+
+;; @@
+(def true-flip-posterior (one-flip-posterior data))
+;; @@
+
+;; **
+;;; Now, we can draw samples just as we would draw samples from a distribution created by calling `(normal 0 1)`. A sample from a conditional distribution defined in this way returns a key-value map, where the keys are the same as those specified in the `predict` statements.
+;;; 
+;;; To index into a hashmap in Clojure, just use the key as a function.
+;; **
+
+;; @@
+;; Draw one sample (returns true or false):
+(sample* true-flip-posterior)
+;; @@
+
+;; **
+;;; Sampling repeatedly from this distribution object characterizes the distribution.	
+;; **
+
+;; @@
+(frequencies (repeatedly 
+               1000
+               #(sample* true-flip-posterior)))
 ;; @@
