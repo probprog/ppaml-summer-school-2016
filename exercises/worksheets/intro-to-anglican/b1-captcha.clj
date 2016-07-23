@@ -202,7 +202,7 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
-;; Don't run with too many particles (up to 1000) as it doesn't work and can cause memory issues
+;; Don't run with too many particles (up to 1000) as it doesn't work even with 10000 particles and can cause memory issues.
 (def num-particles 4)
 (def predicted-captchas-smc (doall (map extract-from-state
                                         (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
