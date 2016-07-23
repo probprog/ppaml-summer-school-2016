@@ -225,9 +225,12 @@ avg-height ; average height of a letter
 
 ;; **
 ;;; Sequential Monte Carlo:
+;;; 
+;;; We put SMC here only for illustrative purposes and to get you to think about the differences between an SMC and an MCMC (below) scheme. An MCMC scheme is much better suited to this probabilistic program.
 ;; **
 
 ;; @@
+;; Don't run with too many particles (up to 1000) as it doesn't work even with 10000 particles and can cause memory issues.
 (def num-particles 100)
 (def predicted-captchas-smc 
   (doall (map extract-from-state
