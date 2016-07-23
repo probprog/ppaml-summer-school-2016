@@ -197,10 +197,12 @@ avg-height ; average height of a letter
 
 ;; **
 ;;; Sequential Monte Carlo:
+;;; 
+;;; We put SMC here only for illustrative purposes and to get you to think about the differences between an SMC and an MCMC (below) scheme. An MCMC scheme is much better suited to this probabilistic program.
 ;; **
 
 ;; @@
-;; Start with small values to see what it does but later use 10000 for good performance (can take around 10 minutes...)
+;; Don't run with too many particles (up to 1000) as it doesn't work and can cause memory issues
 (def num-particles 4)
 (def predicted-captchas-smc (doall (map extract-from-state
                                         (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
@@ -213,7 +215,7 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
-;; Start with small values to see what it does but later use 10000 for good performance (can take around 10 minutes...)
+;; Start with small values to see what it does but later use 10000 for good performance (can take around 15 minutes...)
 (def num-iters 4)
 (def predicted-captchas-rmh (doall (map extract-from-state
                                         (map #(rmh-captcha-posterior-state captcha num-iters [% letter-dict abc-sigma])
@@ -254,5 +256,5 @@ rmh-letters
 ;; @@
 
 ;; **
-;;; Which algorithm works better? Why?
+;;; Why is an MCMC scheme better suited for this probabilistic program (memory issues aside)?
 ;; **
