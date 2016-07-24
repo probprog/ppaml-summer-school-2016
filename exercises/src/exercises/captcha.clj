@@ -1,10 +1,10 @@
 (ns exercises.captcha
+  (:refer-clojure :exclude [rand rand-nth rand-int name read])
   (:require [clojure.string :as str]
             [clojure.core.matrix :as m]
             [clojure.java.io :as io])
-  (:use [clj-hdf5 core]
-        [anglican runtime emit core]
-        [anglican.inference :exclude [rand rand-nth rand-int]])
+  (:use clj-hdf5.core
+        [anglican runtime emit core inference])
   (:import (ch.systemsx.cisd.hdf5 HDF5Factory IHDF5SimpleReader
                                   IHDF5SimpleWriter HDF5FactoryProvider
                                   HDF5DataClass HDF5StorageLayout)
@@ -172,14 +172,14 @@
   (nth (infer :rmh query value) (dec num-iters)))
 
 (defn extract-from-state [state filename]
-  (let [predicts (anglican.state/get-predicts state)
+  (let [result (:result state)
         log-weight (anglican.state/get-log-weight state)]
     (.save oxCaptcha
-           (int-array (reduce concat (:rendered-image predicts)))
+           (int-array (reduce concat (:rendered-image result)))
            WIDTH
            HEIGHT
            filename)
-    (assoc predicts :log-weight log-weight)))
+    (assoc result :log-weight log-weight)))
 
 (defn smc-captcha-MAP-state [query num-particles value]
   (let [states (smc-captcha-posterior-states query num-particles value)
