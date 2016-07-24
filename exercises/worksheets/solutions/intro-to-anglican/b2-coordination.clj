@@ -138,7 +138,7 @@
 ;;; 
 ;;; Fortunately, we can re-write the model above such that it no longer has a hard constraint. Instead of sampling both values and having a deterministic observation, we can `observe` instead of `sample` one of the locations directly.
 ;;; 
-;;; Exercise: convince yourself that both these programs define the exact same distribution over the predict value.
+;;; Exercise: convince yourself that both these programs define the exact same distribution over the result value.
 ;; **
 
 ;; @@
