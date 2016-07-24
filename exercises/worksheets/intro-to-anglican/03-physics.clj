@@ -135,9 +135,9 @@
           num-balls-in-box (balls-in-box end-world)]
 
       ;; *** ADD A LIKELIHOOD FUNCTION (observe) HERE ***
-      (predict :balls balls)
-      (predict :num-balls-in-box num-balls-in-box)
-      (predict :bumper-positions bumper-positions))))
+      {:balls balls
+       :num-balls-in-box num-balls-in-box
+       :bumper-positions bumper-positions})))
 ;; @@
 
 ;; **

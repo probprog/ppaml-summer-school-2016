@@ -6,6 +6,7 @@
 
 ;; @@
 (ns captcha
+  (:refer-clojure :exclude [rand rand-nth rand-int name read])
   (:require [gorilla-plot.core :as plot]
             [anglican.rmh :as rmh]
             [anglican.smc :as smc]
@@ -13,7 +14,8 @@
             [gorilla-repl.image :as image]
             [clojure.java.io :as io])
   (:use [anglican runtime emit core inference]
-        [exercises captcha])
+        [exercises captcha]
+        :reload)
   (:import [javax.imageio ImageIO]
            [java.io File]
            [robots.OxCaptcha OxCaptcha]))
@@ -171,10 +173,10 @@ avg-height ; average height of a letter
       ;; ABC-style observe
       (observe (abc-dist rendered-image abc-sigma) baseline-image)
       (observe (overlap-abc-dist avg-width 10000) xs)
-      (predict :xs xs)
-      (predict :ys ys)
-      (predict :letters letters)
-      (predict :rendered-image rendered-image))))
+      {:xs xs
+       :ys ys
+       :letters letters
+       :rendered-image rendered-image})))
 ;; @@
 
 ;; **
@@ -203,11 +205,13 @@ avg-height ; average height of a letter
 
 ;; @@
 ;; Don't run with too many particles (up to 1000) as it doesn't work even with 10000 particles and can cause memory issues.
-(def num-particles 4)
-(def predicted-captchas-smc (doall (map extract-from-state
-                                        (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
-                                             observes)
-                                        (map #(str "tmp/captcha/captcha-" % "-smc.png") (range 1 (inc (count observes)))))))
+(def num-particles 100)
+(def inferred-captchas-smc 
+  (time 
+    (doall (map extract-from-state
+                (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
+                     observes)
+                (map #(str "tmp/captcha/captcha-" % "-smc.png") (range 1 (inc (count observes))))))))
 ;; @@
 
 ;; **
@@ -215,12 +219,14 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
-;; Start with small values to see what it does but later use 10000 for good performance (can take around 15 minutes...)
-(def num-iters 4)
-(def predicted-captchas-rmh (doall (map extract-from-state
-                                        (map #(rmh-captcha-posterior-state captcha num-iters [% letter-dict abc-sigma])
-                                             observes)
-                                        (map #(str "tmp/captcha/captcha-" % "-rmh.png") (range 1 (inc (count observes)))))))
+;; Start with small values to see what it does but later use 10000 for good performance (can take around 10 minutes...)
+(def num-iters 100)
+(def inferred-captchas-rmh 
+  (time 
+    (doall (map extract-from-state
+                (map #(rmh-captcha-posterior-state captcha num-iters [% letter-dict abc-sigma])
+                     observes)
+                (map #(str "tmp/captcha/captcha-" % "-rmh.png") (range 1 (inc (count observes))))))))
 ;; @@
 
 ;; **
@@ -228,8 +234,8 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
-(def smc-letters (map :letters predicted-captchas-smc))
-(def rmh-letters (map :letters predicted-captchas-rmh))
+(def smc-letters (map :letters inferred-captchas-smc))
+(def rmh-letters (map :letters inferred-captchas-rmh))
 (def smc-rate (* 100.0 (/ (count (filter identity (map = letters smc-letters))) (count letters))))
 (def rmh-rate (* 100.0 (/ (count (filter identity (map = letters rmh-letters))) (count letters))))
 

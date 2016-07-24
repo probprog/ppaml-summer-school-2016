@@ -138,7 +138,7 @@
 ;;; 
 ;;; Fortunately, we can re-write the model above such that it no longer has a hard constraint. Instead of sampling both values and having a deterministic observation, we can `observe` instead of `sample` one of the locations directly.
 ;;; 
-;;; Exercise: convince yourself that both these programs define the exact same distribution over the predict value.
+;;; Exercise: convince yourself that both these programs define the exact same distribution over the result value.
 ;; **
 
 ;; @@
@@ -209,7 +209,7 @@
 ;; <=
 
 ;; **
-;;; Here is a helper function which runs both Amy's and Bob's location selection procedures for a given recursion depth. We want to predict:
+;;; Here is a helper function which runs both Amy's and Bob's location selection procedures for a given recursion depth. We want to infer:
 ;;; 
 ;;; * What is the probability Amy is at the pub?
 ;;; * What is the probability Bob is at the pub?
