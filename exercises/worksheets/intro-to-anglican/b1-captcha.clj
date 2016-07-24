@@ -203,11 +203,13 @@ avg-height ; average height of a letter
 
 ;; @@
 ;; Don't run with too many particles (up to 1000) as it doesn't work even with 10000 particles and can cause memory issues.
-(def num-particles 4)
-(def predicted-captchas-smc (doall (map extract-from-state
-                                        (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
-                                             observes)
-                                        (map #(str "tmp/captcha/captcha-" % "-smc.png") (range 1 (inc (count observes)))))))
+(def num-particles 100)
+(def predicted-captchas-smc 
+  (time 
+    (doall (map extract-from-state
+                (map #(smc-captcha-MAP-state captcha num-particles [% letter-dict abc-sigma])
+                     observes)
+                (map #(str "tmp/captcha/captcha-" % "-smc.png") (range 1 (inc (count observes))))))))
 ;; @@
 
 ;; **
@@ -215,12 +217,14 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
-;; Start with small values to see what it does but later use 10000 for good performance (can take around 15 minutes...)
-(def num-iters 4)
-(def predicted-captchas-rmh (doall (map extract-from-state
-                                        (map #(rmh-captcha-posterior-state captcha num-iters [% letter-dict abc-sigma])
-                                             observes)
-                                        (map #(str "tmp/captcha/captcha-" % "-rmh.png") (range 1 (inc (count observes)))))))
+;; Start with small values to see what it does but later use 10000 for good performance (can take around 10 minutes...)
+(def num-iters 100)
+(def predicted-captchas-rmh 
+  (time 
+    (doall (map extract-from-state
+                (map #(rmh-captcha-posterior-state captcha num-iters [% letter-dict abc-sigma])
+                     observes)
+                (map #(str "tmp/captcha/captcha-" % "-rmh.png") (range 1 (inc (count observes))))))))
 ;; @@
 
 ;; **
