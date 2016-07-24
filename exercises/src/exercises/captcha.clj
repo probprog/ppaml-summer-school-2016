@@ -3,7 +3,8 @@
             [clojure.core.matrix :as m]
             [clojure.java.io :as io])
   (:use [clj-hdf5 core]
-        [anglican runtime emit core inference])
+        [anglican runtime emit core]
+        [anglican.inference :exclude [rand rand-nth rand-int]])
   (:import (ch.systemsx.cisd.hdf5 HDF5Factory IHDF5SimpleReader
                                   IHDF5SimpleWriter HDF5FactoryProvider
                                   HDF5DataClass HDF5StorageLayout)

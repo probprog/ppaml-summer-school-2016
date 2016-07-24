@@ -12,7 +12,8 @@
             [clojure.core.matrix :as m]
             [gorilla-repl.image :as image]
             [clojure.java.io :as io])
-  (:use [anglican runtime emit core inference]
+  (:use [anglican runtime emit core]
+        [anglican.inference :exclude [rand rand-nth rand-int]]
         [exercises captcha])
   (:import [javax.imageio ImageIO]
            [java.io File]
