@@ -15,4 +15,5 @@
   :java-source-paths ["src/ox_captcha"]
   :main ^:skip-aot examples.core
   :target-path "target/%s"
+  :jvm-opts ["-Xmx6g" "-Xms4g"]
   :profiles {:uberjar {:aot :all}})

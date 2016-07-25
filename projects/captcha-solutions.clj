@@ -10,6 +10,7 @@
   (:require [gorilla-plot.core :as plot]
             [anglican.rmh :as rmh]
             [anglican.smc :as smc]
+            [anglican.ipmcmc :as ipmcmc]
             [clojure.core.matrix :as m]
             [gorilla-repl.image :as image]
             [clojure.java.io :as io])
@@ -232,6 +233,26 @@ avg-height ; average height of a letter
 ;; **
 
 ;; @@
+(defn- smc-captcha-posterior-states-l [query num-particles value]
+  (take num-particles (infer :ipmcmc
+                             query
+                             value :number-of-particles 500 :number-of-nodes 8)))
+
+;(defn- smc-captcha-posterior-states-l [query num-particles value]
+;  (take num-particles (infer :smc
+;                             query
+;                             value :number-of-particles num-particles)))
+
+(defn smc-captcha-MAP-state-l [query num-particles value]
+  (let [states (smc-captcha-posterior-states-l query num-particles value)
+        log-weights (map :log-weight states)]
+    (nth states (max-index log-weights))))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;captcha/smc-captcha-MAP-state-l</span>","value":"#'captcha/smc-captcha-MAP-state-l"}
+;; <=
+
+;; @@
 ;; Don't run with too many particles (up to 1000) as it doesn't work even with 10000 particles and can cause memory issues.
 (def num-particles 100)
 (def inferred-captchas-smc 
@@ -303,7 +324,7 @@ rmh-letters
 (str "RMH: recognition rate: " rmh-rate "%")
 ;; @@
 ;; =>
-;;; {"type":"html","content":"<span class='clj-string'>&quot;RMH: recognition rate: 0.0%&quot;</span>","value":"\"RMH: recognition rate: 0.0%\""}
+;;; {"type":"html","content":"<span class='clj-string'>&quot;RMH: recognition rate: 70.0%&quot;</span>","value":"\"RMH: recognition rate: 70.0%\""}
 ;; <=
 
 ;; **
