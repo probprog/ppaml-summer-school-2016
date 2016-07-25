@@ -141,7 +141,7 @@
 ;;; * Can you explain this output? 
 ;;; * Why do subsequent samples share parts of the same trace?
 ;;; 
-;;; Compare this with the traces sampled from PIMH-based algorithms. Without any observes, the traces are drawn independently:
+;;; Compare this with the traces sampled from PIMH-based algorithms. In a PIMH we perform successive SMC sweeps, which are accepted or rejected according to their average importance weight (i.e. the estimate of the marginal likelihood). In a program without observes PIMH generates a sequence of independent samples (we will in a moment consider a program with observes)
 ;; **
 
 ;; @@
