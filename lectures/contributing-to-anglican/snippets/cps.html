@@ -48,10 +48,10 @@ body .bp { color: #009988 } /* Name.Builtin.Pseudo */
 <body>
 <h2></h2>
 
-<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="p">(</span><span class="k">query </span><span class="nv">one-flip</span> <span class="p">[</span><span class="nv">outcome</span><span class="p">]</span>
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="p">(</span><span class="k">query </span><span class="p">[</span><span class="nv">outcome</span><span class="p">]</span>
  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">theta</span> <span class="p">(</span><span class="kr">sample </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))]</span>
   <span class="p">(</span><span class="kr">observe </span><span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> <span class="nv">outcome</span><span class="p">)</span>
-  <span class="p">(</span><span class="kr">predict </span><span class="nv">theta</span><span class="p">)))</span>
+  <span class="nv">theta</span><span class="p">))</span>
 
 <span class="p">(</span><span class="k">fn </span><span class="nv">one-flip</span> <span class="p">[</span><span class="nv">outcome</span> <span class="nv">state</span> <span class="nv">cont</span><span class="p">]</span>
  <span class="p">(</span><span class="kr">sample </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">)</span> 
@@ -63,6 +63,15 @@ body .bp { color: #009988 } /* Name.Builtin.Pseudo */
      <span class="p">(</span><span class="nf">cont</span> <span class="nv">nil</span>
       <span class="p">(</span><span class="nb">add-predict </span>
        <span class="nv">state</span> <span class="nv">bias</span><span class="p">)))))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">importance-one-flip</span> 
+  <span class="p">[</span><span class="nv">outcome</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">theta</span> <span class="p">(</span><span class="nb">sample* </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="nv">w</span> <span class="p">(</span><span class="nb">observe* </span><span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> 
+                    <span class="nv">outcome</span><span class="p">)]</span>
+    <span class="p">{</span><span class="ss">:log-weight</span> <span class="nv">w</span> 
+     <span class="ss">:result</span> <span class="nv">theta</span> 
+     <span class="ss">:predicts</span> <span class="p">[]}))</span>
 
 <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">outcome</span> <span class="nv">$state</span><span class="p">]</span>
  <span class="p">(</span><span class="kr">-&gt;sample </span><span class="ss">&#39;S24726</span>
@@ -97,6 +106,24 @@ body .bp { color: #009988 } /* Name.Builtin.Pseudo */
    <span class="p">(</span><span class="ss">:log-weight</span> <span class="nv">$state</span><span class="p">)</span>
  <span class="ss">:predicts</span> 
    <span class="p">(</span><span class="ss">:predicts</span> <span class="nv">$state</span><span class="p">)}</span>
+
+<span class="p">(</span><span class="nb">use </span><span class="o">&#39;</span><span class="p">[</span><span class="nv">anglican</span> <span class="nv">emit</span> <span class="nv">runtime</span> <span class="nv">inference</span> <span class="nv">state</span><span class="p">])</span>
+<span class="p">(</span><span class="nb">exec </span><span class="ss">:importance</span> <span class="nv">one-flip</span> <span class="p">[</span><span class="nv">true</span><span class="p">]</span> <span class="nv">initial-state</span><span class="p">)</span>
+<span class="c1">; =&gt;</span>
+<span class="o">#</span><span class="nv">anglican.trap.sample</span><span class="p">{</span><span class="ss">:id</span> <span class="nv">S23882</span>, 
+                      <span class="ss">:dist</span> <span class="p">(</span><span class="nf">anglican.runtime/beta</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>, 
+                      <span class="ss">:cont</span> <span class="o">#</span><span class="nv">function</span><span class="p">[</span><span class="nv">test/fn--23883$query23877--23885$var23881--23887</span><span class="p">]</span>, 
+                      <span class="ss">:state</span> <span class="p">{</span><span class="ss">:log-weight</span> <span class="mf">0.0</span>, 
+                              <span class="ss">:predicts</span> <span class="p">[]</span>, 
+                              <span class="ss">:result</span> <span class="nv">nil</span>, 
+                              <span class="ss">:anglican.state/mem</span> <span class="p">{}</span>, 
+                              <span class="ss">:anglican.state/store</span> <span class="nv">nil</span><span class="p">}}</span>  
+
+<span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nb">sample* </span><span class="nv">dist</span><span class="p">)]</span>
+  <span class="p">(</span><span class="nf">cont</span> <span class="nv">x</span> <span class="nv">$state</span><span class="p">))</span> 
+
+<span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">w</span> <span class="p">(</span><span class="nb">observe* </span><span class="nv">dist</span> <span class="nv">value</span><span class="p">)]</span>
+  <span class="p">(</span><span class="nf">cont</span> <span class="nv">nil</span> <span class="p">(</span><span class="nb">add-log-weight </span><span class="nv">$state</span> <span class="nv">w</span><span class="p">)))</span>
 </pre></div>
 </body>
 </html>

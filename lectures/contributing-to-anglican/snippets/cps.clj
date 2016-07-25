@@ -1,7 +1,7 @@
-(query one-flip [outcome]
+(query [outcome]
  (let [theta (sample (beta 1 1))]
   (observe (flip theta) outcome)
-  (predict theta)))
+  theta))
 
 (fn one-flip [outcome state cont]
  (sample (beta 1 1) 
@@ -13,6 +13,27 @@
      (cont nil
       (add-predict 
        state bias)))))))
+
+(defn importance-one-flip 
+  [outcome]
+  (let [theta (sample* (beta 1 1))
+        lp (observe* (flip theta) 
+                    outcome)]
+    {:log-weight lp
+     :result theta 
+     :predicts []}))
+
+
+(defn mh-one-flip 
+  [outcome prev-samples]
+  (let [theta (sample* (beta 1 1))
+        w (observe* (flip theta) 
+                    outcome)]
+    {:log-weight w 
+     :result theta 
+     :predicts []
+     :cache }))
+
 
 (fn [outcome $state]
  (->sample 'S24726
@@ -47,3 +68,21 @@
    (:log-weight $state)
  :predicts 
    (:predicts $state)}
+
+(use '[anglican emit runtime inference state])
+(exec :importance one-flip [true] initial-state)
+; =>
+#anglican.trap.sample{:id S23882, 
+                      :dist (anglican.runtime/beta 1 1), 
+                      :cont #function[test/fn--23883$query23877--23885$var23881--23887], 
+                      :state {:log-weight 0.0, 
+                              :predicts [], 
+                              :result nil, 
+                              :anglican.state/mem {}, 
+                              :anglican.state/store nil}}  
+
+(let [x (sample* dist)]
+  (cont x $state)) 
+
+(let [w (observe* dist value)]
+  (cont nil (add-log-weight $state w)))
