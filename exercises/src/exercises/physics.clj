@@ -205,7 +205,8 @@
   are in the box in the given
   world";
   ;(-ish, problem specific hack)
-  (->> (:balls world)
-     (map position)
-     (filter #(and (< 0 (second %)) (< (second %) 3) (< 14 (first %))))
-     (count)))
+  (count (filter (fn [[x y]]
+                   (and (< 0 y 3) 
+                        (< 14 x)))
+                 (map position 
+                      (:balls world)))))   

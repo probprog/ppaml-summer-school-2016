@@ -52,7 +52,7 @@ of invoking both Anglican and Clojure read eval print loops (REPL).  Fortunately
 \textbf{ Note that Leiningen version $>$2.x is required; the version in  
 GNU-Linux package repositories may be quite a bit out of date.}
 
-The following sequence of commands will, by-in-large, install and make runnable ``lein'' on your system.  For Unix experts the particulars are obvious and simply involve downloading and running a shell script.
+The following sequence of commands will, by-in-large, install and make ``lein'' runnable on your system.  For Unix experts the particulars are obvious and simply involve downloading and running a shell script.
 
 \begin{minted}{bash}
 # Download lein to ~/bin
@@ -81,7 +81,7 @@ The exercises themselves can be cloned from a BitBucket repo (requires a BitBuck
 
 \vspace{5mm}
 
-\texttt{git@bitbucket.org:probprog/ppaml-summer-school-2016.git}
+\texttt{https://bitbucket.org/probprog/ppaml-summer-school-2016}
 
 \newpage
 When you have managed to do all this successfully then, in effect, you will have a 
@@ -100,7 +100,7 @@ the different Anglican example programs.
 
 \vspace{5mm}
 
-\noindent If it says `Could not reserve enough space...`, no worries. Just reduce the amount of the memory for the heap by modifying the related line /project.clj to something like this:
+\noindent If it says ``Could not reserve enough space...,'' no worries. Just reduce the amount of the memory for the heap by modifying the appropriate line in \texttt{/project.clj} to something like this:
 \vspace{-2mm}
 \begin{minted}{clojure}
 :jvm-opts ["-Xmx1g" "-Xms1g"] 
@@ -121,18 +121,44 @@ using the ``Load a worksheet'' command.
 \end{figure}
 
 
-Start by loading \texttt{aistats/clojure-exercises.clj}.
-You can step through (and execute) the cells in the worksheet by pressing \texttt{shift+enter} (also accessible from the menu).  
+Start by loading 
+
+\texttt{exercises/worksheets/intro-to-clojure/01-clojure-overview.clj}.
+
+On a Mac you can step through (and execute) the cells in the worksheet by pressing \texttt{shift+enter} (also accessible from the menu; other OS key combos may be different).  
 This worksheet introduces you to functional programming and Clojure.
 
-FIXME and Anglican in order.  It contains everything required to
-complete the pedagogical exercises in the following worksheets, which should be completed in the following order
+The following joke indicates where you should stop on Monday afternoon, after ensuring that your machine is configured and ready to go for the next day.
+
+\begin{quote}
+Q: Why do programmers always mix up Halloween and Christmas?
+
+A: Because Oct 31 == Dec 25!
+\end{quote}
+\newpage
+
+The worksheet you ran before stopping at the preceding joke contains all the Clojure background required to
+complete the exercises in the following worksheets, which will be introduced and worked through over the week in the following order:
 
 \begin{enumerate}
-\item  \texttt{gaussian/gaussian-worksheet.clj} {\small -- simple Gaussian posterior and "7 scientists" problem.}
-\item  \texttt{physics/physics-worksheet.clj} {\small -- 2D physics simulation.}
-\item  \texttt{finance/finance-worksheet.clj} {\small -- finance model simulation.}
-
+\item Tuesday 10am-12pm
+\begin{enumerate}
+\item  \texttt{/worksheets/intro-to-clojure/01-clojure-overview.clj}
+\item  \texttt{/worksheets/intro-to-clojure/02-clojure-exercises.clj}
+\end{enumerate}
+\item Tuesday 3:30pm-5pm
+\begin{enumerate}
+\item  \texttt{/worksheets/intro-to-inference/01-introduction-to-inference.clj}
+\item  \texttt{/worksheets/intro-to-inference/b1-arithmetic-function-induction.clj}
+\end{enumerate}
+\item Wednesday 10am-12pm; 2:30pm-5pm
+\begin{enumerate}
+\item  \texttt{/worksheets/intro-to-anglican/01-hello-world.clj}
+\item  \texttt{/worksheets/intro-to-anglican/02-gaussian.clj}		
+\item  \texttt{/worksheets/intro-to-anglican/03-physics.clj}		
+\item  \texttt{/worksheets/intro-to-anglican/04-poisson-trace.clj}
+\item  \texttt{/worksheets/intro-to-anglican/b1-coordination.clj}
+\end{enumerate}
 \end{enumerate}
 
 
@@ -144,7 +170,7 @@ complete the pedagogical exercises in the following worksheets, which should be 
 Ideally you would be a Clojure programmer, or, at least, a functional 
 programming expert in advance of learning Anglican.  It is not necessary however, as these
 materials are self contained.  Familiarising yourself
-with Clojure may help your overall experience however. 
+with Clojure even beyond the material provided may help your overall experience however. 
 
 In general, the Clojure main website
 \url{http://clojure.org/} has links to a large number of language 
