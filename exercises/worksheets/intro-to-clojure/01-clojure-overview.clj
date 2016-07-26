@@ -32,7 +32,7 @@
   ;; this is equivalent to the python command
   ;;
   ;;  from anglican.runtime import *
-  (:use [anglican.runtime]))
+  (:use [anglican.runtime :exclude [sum]]))
 ;; @@
 
 ;; **

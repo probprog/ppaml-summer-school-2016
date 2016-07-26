@@ -7,7 +7,7 @@
 ;; @@
 (ns clojure-exercises
    (:require [clojure.repl :as repl])
-   (:use [anglican.runtime]))
+   (:use [anglican.runtime :exclude [sum]]))
 
 (def ...complete-this... nil)
 
